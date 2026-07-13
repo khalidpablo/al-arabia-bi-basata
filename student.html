@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بوابة البطل | العربية ببساطة</title>
+    
+    <!-- 🛡️ حارس البوابة الفوري -->
+    <script>
+        const checkUser = localStorage.getItem('loggedInUser');
+        if (!checkUser || checkUser === 'admin') { window.location.href = 'index.html'; }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -14,10 +21,10 @@
             theme: {
                 extend: {
                     colors: {
-                        logoDark: '#0b162c',    /* الكحلي الداكن من خلفية اللوجو */
-                        logoNavy: '#112244',    /* الكحلي المتوسط للكروت والإطارات */
-                        logoGold: '#d4af37',    /* الذهبي الملكي للرموز والأزرار */
-                        logoGoldHover: '#aa8c2c' /* ذهبي داكن عند تمرير الماوس */
+                        logoDark: '#0b162c',
+                        logoNavy: '#112244',
+                        logoGold: '#d4af37',
+                        logoGoldHover: '#aa8c2c'
                     }
                 }
             }
@@ -25,47 +32,14 @@
     </script>
     
     <style>
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #0b162c;
-            overflow-x: hidden;
-        }
-        
-        /* تأثير الحركة العائمة للأيقونات الكبيرة */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* تأثير التوهج الذهبي الملكي */
-        .gold-glow {
-            transition: all 0.4s ease;
-        }
-        .gold-glow:hover {
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
-            border-color: rgba(212, 175, 55, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* تخصيص السكرول بار */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0b162c;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #112244;
-            border-radius: 4px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #d4af37;
-        }
+        body { font-family: 'Cairo', sans-serif; background-color: #0b162c; overflow-x: hidden; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .gold-glow { transition: all 0.4s ease; }
+        .gold-glow:hover { box-shadow: 0 0 20px rgba(212, 175, 55, 0.25); border-color: rgba(212, 175, 55, 0.5); transform: translateY(-2px); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0b162c; }
+        ::-webkit-scrollbar-thumb { background: #112244; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); }
     </style>
 </head>
 <body class="text-slate-100 min-h-screen pb-12 bg-gradient-to-b from-[#0b162c] via-[#0f1f3d] to-[#0b162c]">
@@ -78,145 +52,114 @@
                     <img src="logo.png" alt="لوجو العربية ببساطة" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150/0b162c/d4af37?text=ض'">
                     <span class="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-logoGold rounded-full shadow-md shadow-logoGold animate-ping"></span>
                 </div>
-                
-                <div class="flex flex-col">
-                    <h1 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-logoGold tracking-wide" id="studentWelcomeTitle">
-                        لوحة البطل...
-                    </h1>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-logoGold tracking-wide" id="studentWelcomeTitle">لوحة البطل...</h1>
                     <p class="text-xs text-slate-400 font-semibold tracking-widest mt-0.5">بَوَّابَةُ الأُسْتَاذ خَالِد التَّعْلِيمِيَّة الرَّسْمِيَّة</p>
                 </div>
             </div>
-            
-            <button onclick="logout()" class="px-5 py-2 border border-red-500/40 text-red-400 rounded-xl font-bold hover:bg-red-500 hover:text-white hover:shadow-lg hover:shadow-red-500/20 transition duration-300 text-sm">
-                <i class="fa-solid fa-arrow-right-from-bracket ml-1"></i> تسجيل الخروج
-            </button>
+            <button onclick="logout()" class="px-5 py-2 border border-red-500/40 text-red-400 rounded-xl font-bold hover:bg-red-500 hover:text-white transition duration-300 text-sm">تسجيل الخروج</button>
         </header>
 
-        <div id="noticeboardBanner" class="hidden bg-gradient-to-r from-amber-600/20 to-logoNavy border border-logoGold/30 p-4 rounded-xl shadow-lg mb-8 items-center gap-3 animate-pulse duration-1000">
+        <!-- بنر الإعلانات -->
+        <div id="noticeboardBanner" class="hidden bg-gradient-to-r from-amber-600/20 to-logoNavy border border-logoGold/30 p-4 rounded-xl shadow-lg mb-8 items-center gap-3 animate-pulse">
             <span class="text-2xl text-logoGold"><i class="fa-solid fa-bullhorn"></i></span>
             <div class="flex-1">
-                <span class="text-xs font-bold text-logoGold block">توجيه هام من الأستاذ خالد وحيد:</span>
+                <span class="text-xs font-bold text-logoGold block">توجيه هام من الأستاذ خالد:</span>
                 <p id="noticeTextContainer" class="text-xs text-white font-semibold mt-0.5">لا توجد إعلانات اليوم.</p>
             </div>
         </div>
 
+        <!-- كرت الترحيب بالبطل -->
         <div class="bg-gradient-to-r from-logoNavy via-[#162a54] to-logoNavy/40 border border-logoGold/20 p-6 rounded-2xl shadow-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden group">
-            <div class="absolute -right-10 -bottom-10 text-white/5 text-9xl font-black select-none pointer-events-none group-hover:scale-110 transition duration-700">ض</div>
-            
             <div class="flex flex-col md:flex-row items-center gap-5 z-10 w-full md:w-auto">
-                <div class="bg-logoDark h-20 w-20 rounded-2xl border border-logoGold/30 flex items-center justify-center text-4xl shadow-xl shadow-logoGold/5 animate-float">
-                    🏆
-                </div>
+                <div class="bg-logoDark h-20 w-20 rounded-2xl border border-logoGold/30 flex items-center justify-center text-4xl shadow-xl animate-float">🏆</div>
                 <div class="text-center md:text-right">
                     <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-logoGold to-white mb-1" id="heroCardName">جاري التحميل...</h2>
                     <p class="text-xs text-slate-300 font-medium">بطل متميز في لغة الضاد ومستعد للتحدي دائمًا ✨</p>
-                    
-                    <button onclick="toggleProfileCard()" class="mt-3 bg-logoDark hover:bg-logoDark/80 text-logoGold border border-logoGold/30 text-[11px] font-bold px-3 py-1.5 rounded-xl transition duration-300 flex items-center gap-1.5 mx-auto md:mx-0 shadow-sm">
-                        <i class="fa-solid fa-address-card"></i>
-                        <span id="toggleBtnText">عرض بطاقة البطل الرقمية 🪪</span>
+                    <button onclick="toggleProfileCard()" class="mt-3 bg-logoDark text-logoGold border border-logoGold/30 text-[11px] font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 mx-auto md:mx-0">
+                        <i class="fa-solid fa-address-card"></i> <span id="toggleBtnText">عرض بطاقة البطل الرقمية 🪪</span>
                     </button>
                 </div>
             </div>
-            
-            <div class="bg-logoDark/90 px-8 py-4 rounded-2xl border-2 border-logoGold/30 text-center min-w-[160px] shadow-inner z-10 relative">
-                <div class="text-[11px] text-slate-400 font-bold uppercase tracking-wider mb-1">الرصيد الكلي للأبطال</div>
-                <div class="text-3xl font-black text-logoGold tracking-wide drop-shadow-[0_2px_8px_rgba(212,175,55,0.4)]" id="studentScoreText">0 نقطة</div>
+            <div class="bg-logoDark/90 px-8 py-4 rounded-2xl border-2 border-logoGold/30 text-center min-w-[160px] z-10">
+                <div class="text-[11px] text-slate-400 font-bold uppercase tracking-wider mb-1">الرصيد الكلي للنقاط</div>
+                <div class="text-3xl font-black text-logoGold tracking-wide" id="studentScoreText">0 نقطة</div>
             </div>
         </div>
 
+        <!-- البطاقة الذكية التفاعلية للملف الشخصي -->
         <div id="interactiveProfileCard" class="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out mb-0">
-            <div class="bg-gradient-to-b from-[#112244] to-[#0b162c] border-2 border-logoGold/40 rounded-3xl p-6 mb-8 max-w-md mx-auto text-center relative shadow-2xl shadow-logoGold/10">
-                <div class="absolute top-3 left-3 bg-logoGold/10 text-logoGold border border-logoGold/30 text-[9px] px-2 py-0.5 rounded-full font-bold">هوية ذكية موثقة</div>
-                
-                <div class="w-28 h-28 mx-auto rounded-full bg-logoDark border-4 border-logoGold p-1 shadow-xl shadow-logoGold/20 relative group mb-4">
-                    <img id="studentAvatarImg" src="https://api.dicebear.com/7.x/bottts/svg?seed=Hero" alt="صورة البطل" class="w-full h-full rounded-full object-cover">
-                    <div class="absolute inset-0 bg-logoGold/10 rounded-full animate-pulse"></div>
+            <div class="bg-gradient-to-b from-[#112244] to-[#0b162c] border-2 border-logoGold/40 rounded-3xl p-6 mb-8 max-w-md mx-auto text-center relative shadow-2xl">
+                <div class="w-28 h-28 mx-auto rounded-full bg-logoDark border-4 border-logoGold p-1 shadow-xl mb-4">
+                    <img id="studentAvatarImg" src="" alt="صورة البطل" class="w-full h-full rounded-full object-cover">
                 </div>
-                
                 <h3 id="profileCardTitleName" class="text-lg font-bold text-white">فارس الضاد</h3>
-                <p id="profileCardPhone" class="text-xs text-logoGold font-medium mt-1">رقم الحساب: 00000000</p>
+                <p id="profileCardPhone" class="text-xs text-logoGold font-medium mt-1">رقم الحساب: 0000</p>
                 <div class="mt-4 pt-3 border-t border-slate-700/50 grid grid-cols-2 gap-2 text-right text-xs text-slate-300">
-                    <div><i class="fa-solid fa-bolt text-amber-500 ml-1"></i> الحالة: <span class="text-green-400 font-bold">نشط حالياً</span></div>
-                    <div><i class="fa-solid fa-shield-halved text-logoGold ml-1"></i> الرتبة: <span class="text-slate-100">بطل متفوق</span></div>
+                    <div>🟢 الحالة: <span class="text-green-400 font-bold">نشط حالياً</span></div>
+                    <div id="profileCardGrade">🎓 الصف: <span>جاري التحميل...</span></div>
                 </div>
             </div>
         </div>
 
+        <!-- الأقسام والمحتوى -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
             <div class="lg:col-span-4 space-y-6">
+                <!-- المتصدرين الخمسة الأوائل -->
                 <div class="bg-logoNavy border border-logoGold/10 p-5 rounded-2xl shadow-xl gold-glow">
-                    <h2 class="text-lg font-bold text-logoGold mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-crown text-logoGold animate-bounce"></i> لوحة الأبطال الخمسة الأوائل
-                    </h2>
-                    <div id="leaderboardList" class="space-y-3">
-                        <p class="text-center py-4 text-xs text-slate-500">جاري تجميع نقاط الأبطال...</p>
-                    </div>
+                    <h2 class="text-lg font-bold text-logoGold mb-4 flex items-center gap-2"><i class="fa-solid fa-crown text-logoGold animate-bounce"></i> لوحة الأبطال الخمسة الأوائل</h2>
+                    <div id="leaderboardList" class="space-y-3"><p class="text-center py-4 text-xs text-slate-500">جاري الحساب...</p></div>
                 </div>
-
+                <!-- التقييمات والاختبارات المخصصة للمرحلة -->
                 <div class="bg-logoNavy border border-logoGold/10 p-5 rounded-2xl shadow-xl gold-glow">
-                    <h2 class="text-lg font-bold text-logoGold mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-award text-logoGold animate-pulse"></i> الاختبارات والتقييمات التفاعلية
-                    </h2>
-                    <p class="text-[11px] text-slate-300 mb-4 leading-relaxed">أجب على الاختبارات بدقة شديدة، ستحصل على 10 نقاط كاملة عن كل إجابة صحيحة ترفع من ترتيبك بلوحة الأبطال!</p>
-                    <div id="quizzesContainer" class="space-y-3">
-                        <p class="text-center py-4 text-xs text-slate-500">جاري استيراد التحديات السحابية...</p>
-                    </div>
+                    <h2 class="text-lg font-bold text-logoGold mb-4 flex items-center gap-2"><i class="fa-solid fa-award text-logoGold"></i> الاختبارات والتقييمات التفاعلية</h2>
+                    <div id="quizzesContainer" class="space-y-3"><p class="text-center py-4 text-xs text-slate-500">جاري التجهيز...</p></div>
                 </div>
             </div>
 
+            <!-- مكتبة الشروحات والملفات المخصصة لصف الطالب -->
             <div class="lg:col-span-8 space-y-8">
                 <div class="bg-logoNavy border border-logoGold/10 p-6 rounded-2xl shadow-xl gold-glow">
-                    <h2 class="text-xl font-bold text-logoGold mb-6 flex items-center gap-2">
-                        <i class="fa-solid fa-graduation-cap text-logoGold"></i> مكتبة أوراق العمل وفيديوهات الشرح
-                    </h2>
-                    
-                    <div id="lessonsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="col-span-1 md:col-span-2 text-center py-12 text-slate-400">
-                            <i class="fa-solid fa-spinner animate-spin text-3xl text-logoGold mb-3"></i>
-                            <p>جاري تحضير دروسك الممتعة...</p>
-                        </div>
+                    <h2 class="text-xl font-bold text-logoGold mb-4 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-logoGold"></i> مكتبة أوراق العمل وفيديوهات الشرح</h2>
+                    <div class="flex flex-wrap gap-2 mb-6 border-b border-logoGold/10 pb-4">
+                        <button onclick="setLessonFilter('all')" id="filter-all" class="px-4 py-2 bg-logoGold text-logoDark text-xs font-bold rounded-xl transition shadow-md">الكل 📚</button>
+                        <button onclick="setLessonFilter('video')" id="filter-video" class="px-4 py-2 bg-logoDark text-slate-300 border border-logoGold/20 text-xs font-bold rounded-xl transition hover:border-logoGold">فيديوهات الشرح 🎬</button>
+                        <button onclick="setLessonFilter('pdf')" id="filter-pdf" class="px-4 py-2 bg-logoDark text-slate-300 border border-logoGold/20 text-xs font-bold rounded-xl transition hover:border-logoGold">أوراق العمل PDF 📄</button>
                     </div>
+                    <div id="lessonsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <div id="quizModal" class="fixed inset-0 bg-logoDark/95 backdrop-blur-md hidden items-center justify-center p-4 z-50 transition-all duration-300">
-        <div class="bg-logoNavy border-2 border-logoGold/40 p-6 md:p-8 rounded-3xl max-w-lg w-full shadow-2xl relative transform scale-95 transition-all duration-300">
-            <button onclick="closeQuizModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <!-- نافذة منبثقة لحل الاختبار تفاعلياً -->
+    <div id="quizModal" class="fixed inset-0 bg-logoDark/95 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="bg-logoNavy border-2 border-logoGold/40 p-6 md:p-8 rounded-3xl max-w-lg w-full shadow-2xl relative transform transition-all duration-300">
+            <button onclick="closeQuizModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
             <div class="flex justify-between items-center mb-4 mt-2">
-                <span class="text-xs text-logoGold bg-logoGold/10 border border-logoGold/20 px-3 py-1 rounded-full font-bold" id="modalQuizTitle">عنوان الاختبار</span>
-                <span class="text-xs text-amber-400 font-bold" id="modalQuizProgress">السؤال 1 من 1</span>
+                <span class="text-xs text-logoGold bg-logoGold/10 border border-logoGold/20 px-3 py-1 rounded-full font-bold" id="modalQuizTitle">الاختبار</span>
+                <span class="text-xs text-amber-400 font-bold" id="modalQuizProgress">السؤال 1</span>
             </div>
-            
-            <h3 class="text-lg md:text-xl font-bold text-slate-100 mb-6 leading-relaxed" id="modalQuestionText">السؤال هنا؟</h3>
-            
-            <div class="space-y-3" id="modalOptionsContainer">
-                </div>
-            
-            <button id="submitQuizAnswerBtn" class="w-full mt-6 bg-logoGold hover:bg-logoGoldHover text-logoDark font-extrabold py-3.5 rounded-xl transition duration-300 transform active:scale-95 shadow-lg shadow-logoGold/10 flex items-center justify-center gap-2">
+            <h3 class="text-lg md:text-xl font-bold text-slate-100 mb-6" id="modalQuestionText">السؤال؟</h3>
+            <div class="space-y-3" id="modalOptionsContainer"></div>
+            <button id="submitQuizAnswerBtn" class="w-full mt-6 bg-logoGold hover:bg-logoGoldHover text-logoDark font-extrabold py-3.5 rounded-xl transition flex items-center justify-center gap-2">
                 <span id="quizSubmitBtnText">التالي</span> <i class="fa-solid fa-arrow-left"></i>
             </button>
         </div>
     </div>
 
+    <!-- زر واتساب العائم لمراسلة الأستاذ خالد -->
+    <button onclick="contactTeacher()" class="group fixed bottom-6 left-6 bg-[#25D366] hover:bg-[#20ba5a] text-white h-14 w-14 rounded-full shadow-2xl flex items-center justify-center text-2xl z-50 transition transform hover:scale-110">
+        <i class="fa-brands fa-whatsapp animate-pulse"></i>
+    </button>
+
     <div id="customToast" class="fixed bottom-6 right-6 bg-logoNavy border-2 border-logoGold px-6 py-4 rounded-xl shadow-2xl z-50 translate-y-20 opacity-0 transition-all duration-500 max-w-sm">
-        <div class="flex items-center gap-3">
-            <span id="toastIcon" class="text-2xl">🎉</span>
-            <div>
-                <h4 id="toastTitle" class="font-bold text-logoGold">إشعار المنصة</h4>
-                <p id="toastMessage" class="text-slate-200 text-xs mt-1">تمت العملية بنجاح!</p>
-            </div>
-        </div>
+        <div class="flex items-center gap-3"><span id="toastIcon" class="text-2xl">🎉</span><div><h4 id="toastTitle" class="font-bold text-logoGold">إشعار</h4><p id="toastMessage" class="text-slate-200 text-xs mt-1"></p></div></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, onSnapshot, collection, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, collection, updateDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBB49YLeVKt0X8IKeeqXBBigpRpr1fkfUk",
@@ -231,438 +174,211 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // التحقق من هوية الطالب وجلسة تسجيل الدخول
         const loggedInUserStr = localStorage.getItem('loggedInUser');
-        if (!loggedInUserStr || loggedInUserStr === 'admin') {
-            window.location.href = 'index.html';
-        }
-
-        const loggedInUser = JSON.parse(loggedInUserStr);
+        const loggedInUser = loggedInUserStr ? JSON.parse(loggedInUserStr) : {};
         const studentPhone = loggedInUser.phone;
-        let currentStudentData = null;
         
-        // متغيرات تتبع حالة حل الاختبار متعدد الأسئلة
-        let activeQuizId = null;
-        let activeQuizData = null;
-        let quizQuestionsList = [];
-        let currentQuestionIndex = 0;
-        let selectedOptionIndex = null;
-        let correctAnswersCount = 0;
+        let currentStudentData = null;
+        let activeQuizId = null; let activeQuizData = null; let quizQuestionsList = [];
+        let currentQuestionIndex = 0; let selectedOptionIndex = null; let correctAnswersCount = 0;
+        let isFeedbackPhase = false; let localLessonsArray = []; let currentLessonFilter = 'all';
 
-        // دالة إظهار وإخفاء البطاقة الشخصية المحدثة بسلاسة وانسيابية (تأثير تظهر وتختفي)
+        // قاموس ترجمة الأكواد لبطاقة ملف الطالب التعريفي
+        const gradesMapping = {
+            "1pri": "الأول الابتدائي", "2pri": "الثاني الابتدائي", "3pri": "الثالث الابتدائي",
+            "4pri": "الرابع الابتدائي", "5pri": "الخامس الابتدائي", "6pri": "السادس الابتدائي",
+            "1prep": "الأول الإعدادي", "2prep": "الثاني الإعدادي", "3prep": "الثالث الإعدادي",
+            "1sec": "الأول الثانوي", "2sec": "الثاني الثانوي", "3sec": "الثالث الثانوي"
+        };
+
         let isCardVisible = false;
         window.toggleProfileCard = () => {
             const card = document.getElementById('interactiveProfileCard');
             const btnText = document.getElementById('toggleBtnText');
-            
             if (!isCardVisible) {
-                card.style.maxHeight = "500px";
-                card.style.opacity = "1";
-                card.style.marginBottom = "2rem";
-                btnText.innerText = "إخفاء بطاقة البطل الرقمية ❌";
-                isCardVisible = true;
+                card.style.maxHeight = "500px"; card.style.opacity = "1"; card.style.marginBottom = "2rem";
+                btnText.innerText = "إخفاء بطاقة البطل الرقمية ❌"; isCardVisible = true;
             } else {
-                card.style.maxHeight = "0";
-                card.style.opacity = "0";
-                card.style.marginBottom = "0";
-                btnText.innerText = "عرض بطاقة البطل الرقمية 🪪";
-                isCardVisible = false;
+                card.style.maxHeight = "0"; card.style.opacity = "0"; card.style.marginBottom = "0";
+                btnText.innerText = "عرض بطاقة البطل الرقمية 🪪"; isCardVisible = false;
             }
         };
 
-        // دالة عرض التنبيهات المخصصة
         window.showToast = (title, message, icon = '🎉') => {
             const toast = document.getElementById('customToast');
-            document.getElementById('toastTitle').innerText = title;
-            document.getElementById('toastMessage').innerText = message;
-            document.getElementById('toastIcon').innerText = icon;
-            
+            document.getElementById('toastTitle').innerText = title; document.getElementById('toastMessage').innerText = message; document.getElementById('toastIcon').innerText = icon;
             toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 4500);
+            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 4500);
         };
 
-        // تحديث حالة الطالب ليصبح "متصل" لحظياً عند دخول الصفحة
         async function updateOnlineStatus(status) {
-            if (studentPhone) {
-                try {
-                    await updateDoc(doc(db, "students", studentPhone), {
-                        isOnline: status
-                    });
-                } catch (e) {
-                    console.error("Error updating online state", e);
-                }
-            }
+            if (studentPhone) { try { await updateDoc(doc(db, "students", studentPhone), { isOnline: status }); } catch (e) {} }
         }
 
-        // الاستماع اللحظي للوجو المنصة من السيرفر وتغييره فوراً لجميع الطلاب
-        onSnapshot(doc(db, "settings", "logo"), (docSnap) => {
-            if (docSnap.exists() && docSnap.data().base64) {
-                const logoImgs = document.querySelectorAll('img[alt="لوجو العربية ببساطة"]');
-                logoImgs.forEach(img => {
-                    img.src = docSnap.data().base64;
-                });
-            }
-        });
+        if (studentPhone) {
+            onSnapshot(doc(db, "students", studentPhone), (docSnap) => {
+                if (docSnap.exists()) {
+                    currentStudentData = docSnap.data();
+                    const hour = new Date().getHours();
+                    let greeting = hour < 12 ? "صباح الخير والهمة" : "مساء النور والتميز";
+                    
+                    document.getElementById('studentWelcomeTitle').innerText = `${greeting} يا بطل، ${currentStudentData.name} ✨`;
+                    document.getElementById('heroCardName').innerText = currentStudentData.name;
+                    document.getElementById('studentScoreText').innerText = `${currentStudentData.score || 0} نقطة`;
+                    
+                    let gradeText = gradesMapping[currentStudentData.grade] || "محتوى عام";
+                    document.getElementById('profileCardGrade').innerHTML = `🎓 الصف: <span class="text-white font-bold">${gradeText}</span>`;
+                    document.getElementById('profileCardTitleName').innerText = currentStudentData.name;
+                    document.getElementById('profileCardPhone').innerText = `رقم الحساب: ${studentPhone}`;
+                    document.getElementById('studentAvatarImg').src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(currentStudentData.name)}&backgroundColor=112244,0b162c&radius=50`;
+                    
+                    renderLessonsList();
+                } else { logout(); }
+            });
+        }
 
-        // الاستماع اللحظي للتوجيهات والإعلانات
-        onSnapshot(doc(db, "settings", "notice"), (docSnap) => {
-            const banner = document.getElementById('noticeboardBanner');
-            const textContainer = document.getElementById('noticeTextContainer');
-            if (docSnap.exists() && docSnap.data().text) {
-                textContainer.innerText = docSnap.data().text;
-                banner.classList.remove('hidden');
-                banner.classList.add('flex');
-            } else {
-                banner.classList.add('hidden');
-            }
-        });
-
-        // الاستماع الفوري لبيانات الطالب الشخصية ونقاطه وتحديث بطاقته الشخصية
-        onSnapshot(doc(db, "students", studentPhone), (docSnap) => {
-            if (docSnap.exists()) {
-                currentStudentData = docSnap.data();
-                document.getElementById('studentWelcomeTitle').innerText = `لوحة البطل ${currentStudentData.name}`;
-                document.getElementById('heroCardName').innerText = currentStudentData.name;
-                document.getElementById('studentScoreText').innerText = `${currentStudentData.score || 0} نقطة`;
-                
-                // تحديث بيانات كارت الهوية التفاعلي المضاف حديثاً
-                document.getElementById('profileCardTitleName').innerText = currentStudentData.name;
-                document.getElementById('profileCardPhone').innerText = `رقم الحساب: ${studentPhone}`;
-                // إنشاء صورة افتراضية ملونة ومميزة باسم الطالب تلقائياً لتظهر في الكارت
-                document.getElementById('studentAvatarImg').src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(currentStudentData.name)}&backgroundColor=112244,0b162c&radius=50`;
-            } else {
-                localStorage.removeItem('loggedInUser');
-                window.location.href = 'index.html';
-            }
-        });
-
-        // تشغيل مراقبة "متصل"
         updateOnlineStatus(true);
 
-        // جلب وتحديث لوحة شرف الطلاب الخمسة الأوائل لحظياً مع إدخال كروت جذابة
         onSnapshot(collection(db, "students"), (snapshot) => {
-            const list = document.getElementById('leaderboardList');
-            list.innerHTML = "";
-
-            if (snapshot.empty) {
-                list.innerHTML = `<p class="text-center py-4 text-xs text-slate-500">لا توجد نقاط مسجلة بعد.</p>`;
-                return;
-            }
-
-            let studentsArray = [];
-            snapshot.forEach((studentDoc) => {
-                studentsArray.push({
-                    name: studentDoc.data().name,
-                    score: studentDoc.data().score || 0
-                });
-            });
-
-            studentsArray.sort((a, b) => b.score - a.score);
-            const topFive = studentsArray.slice(0, 5);
-
-            topFive.forEach((st, index) => {
-                let medal = "🥇";
-                let bgEffect = "bg-logoDark/60";
-                if (index === 0) { medal = "🥇"; bgEffect = "bg-gradient-to-r from-logoGold/10 to-logoDark/60 border-logoGold/30"; }
-                else if (index === 1) medal = "🥈";
-                else if (index === 2) medal = "🥉";
-                else if (index > 2) medal = "✨";
-
+            const list = document.getElementById('leaderboardList'); list.innerHTML = "";
+            let arr = []; snapshot.forEach(d => arr.push({ name: d.data().name, score: d.data().score || 0 }));
+            arr.sort((a,b)=>b.score-a.score);
+            arr.slice(0,5).forEach((st, idx) => {
+                let medal = idx===0?"🥇":idx===1?"🥈":idx===2?"🥉":"✨";
                 list.innerHTML += `
-                    <div class="flex items-center justify-between p-3 ${bgEffect} border border-logoGold/10 rounded-xl hover:translate-x-[-4px] transition duration-300">
-                        <div class="flex items-center gap-2">
-                            <span class="text-base">${medal}</span>
-                            <span class="text-xs font-bold text-slate-200">${st.name}</span>
-                        </div>
-                        <span class="text-xs font-black text-logoGold">${st.score} نقطة</span>
-                    </div>
-                `;
+                    <div class="flex items-center justify-between p-3 bg-logoDark/60 border border-logoGold/10 rounded-xl">
+                        <div class="flex items-center gap-2"><span>${medal}</span><span class="text-xs font-bold text-slate-200">${st.name}</span></div>
+                        <span class="text-xs font-black text-logoGold">${st.score} ن</span>
+                    </div>`;
             });
         });
 
-        // مراقبة تفرع الدروس المضافة من المعلم لحظياً
-        onSnapshot(collection(db, "lessons"), (snapshot) => {
-            const grid = document.getElementById('lessonsGrid');
-            grid.innerHTML = "";
+        window.setLessonFilter = (type) => {
+            currentLessonFilter = type;
+            ['all', 'video', 'pdf'].forEach(f => {
+                document.getElementById(`filter-${f}`).className = f === type ? "px-4 py-2 bg-logoGold text-logoDark text-xs font-bold rounded-xl transition shadow-lg" : "px-4 py-2 bg-logoDark text-slate-300 border border-logoGold/20 text-xs font-bold rounded-xl transition hover:border-logoGold";
+            });
+            renderLessonsList();
+        };
 
-            if (snapshot.empty) {
-                grid.innerHTML = `
-                    <div class="col-span-1 md:col-span-2 text-center py-12 text-slate-400">
-                        <i class="fa-solid fa-folder-open text-4xl mb-3 text-slate-600"></i>
-                        <p>لا يوجد دروس تعليمية مضافة حالياً. انتظر جديد أستاذك قريباً!</p>
-                    </div>
-                `;
-                return;
+        function renderLessonsList() {
+            const grid = document.getElementById('lessonsGrid'); grid.innerHTML = "";
+            const filtered = localLessonsArray.filter(l => {
+                if (currentStudentData && l.grade && l.grade !== currentStudentData.grade) return false;
+                if (currentLessonFilter === 'all') return true;
+                const isPdf = l.type === 'pdf' || (l.url && l.url.includes('.pdf'));
+                return currentLessonFilter === 'pdf' ? isPdf : !isPdf;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-2 text-center py-12 text-slate-500 text-xs"><p>لا توجد دروس مرفوعة لصفك الدراسي حالياً في هذا القسم.</p></div>`; return;
             }
 
-            snapshot.forEach((lessonDoc) => {
-                const lesson = lessonDoc.data();
-                let mediaMarkup = "";
-
-                if (lesson.type === 'pdf' || (lesson.url && lesson.url.includes('.pdf'))) {
-                    mediaMarkup = `
-                        <div class="p-4 bg-logoDark border border-logoGold/20 rounded-xl flex flex-col justify-between h-44 hover:border-logoGold/50 transition duration-300 shadow-md">
-                            <div class="flex items-start gap-3">
-                                <span class="text-3xl text-red-500"><i class="fa-solid fa-file-pdf animate-pulse"></i></span>
-                                <div>
-                                    <h4 class="font-bold text-xs text-slate-100 line-clamp-2">${lesson.title}</h4>
-                                    <p class="text-[10px] text-slate-400 mt-1">ملف تعليمي بصيغة PDF جاهز للمذاكرة والتحميل</p>
-                                </div>
-                            </div>
-                            <a href="${lesson.url}" target="_blank" class="w-full bg-logoNavy text-logoGold text-center text-xs font-bold py-2 px-4 rounded-lg hover:bg-logoGold hover:text-logoDark border border-logoGold/30 transition duration-300 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-book-open"></i> قراءة وتنزيل الملف الدراسي
-                            </a>
-                        </div>
-                    `;
-                } else {
-                    mediaMarkup = `
-                        <div class="bg-logoDark border border-logoGold/20 rounded-xl overflow-hidden flex flex-col justify-between hover:border-logoGold/50 transition duration-300 shadow-md">
-                            <div class="relative aspect-video">
-                                <video controls class="w-full h-full object-cover">
-                                    <source src="${lesson.url}" type="video/mp4">
-                                    متصفحك لا يدعم مشغلات الفيديو الافتراضية.
-                                </video>
-                            </div>
-                            <div class="p-4">
-                                <h4 class="font-bold text-xs text-slate-100">${lesson.title}</h4>
-                                <p class="text-[10px] text-logoGold mt-1"><i class="fa-solid fa-circle-play"></i> شرح مرئي ممتاز</p>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                grid.innerHTML += mediaMarkup;
+            filtered.forEach(lesson => {
+                let isPdf = lesson.type === 'pdf' || (lesson.url && lesson.url.includes('.pdf'));
+                grid.innerHTML += isPdf ? `
+                    <div class="p-4 bg-logoDark border border-logoGold/20 rounded-xl flex flex-col justify-between h-44 shadow-md">
+                        <div class="flex items-start gap-3"><span class="text-3xl text-red-500"><i class="fa-solid fa-file-pdf"></i></span>
+                        <div><h4 class="font-bold text-xs text-slate-100 line-clamp-2">${lesson.title}</h4></div></div>
+                        <a href="${lesson.url}" target="_blank" class="w-full bg-logoNavy text-logoGold text-center text-xs font-bold py-2 rounded-lg hover:bg-logoGold hover:text-logoDark transition">قراءة وتنزيل المذكرة</a>
+                    </div>` : `
+                    <div class="bg-logoDark border border-logoGold/20 rounded-xl overflow-hidden shadow-md">
+                        <div class="aspect-video"><video controls class="w-full h-full object-cover"><source src="${lesson.url}" type="video/mp4"></video></div>
+                        <div class="p-3"><h4 class="font-bold text-xs text-slate-100">${lesson.title}</h4></div>
+                    </div>`;
             });
-        });
+        }
 
-        // مراقبة الاختبارات المضافة لحظياً والتحقق من حل البطل لها
+        onSnapshot(collection(db, "lessons"), (snap) => { localLessonsArray = []; snap.forEach(d => localLessonsArray.push(d.data())); renderLessonsList(); });
+
         onSnapshot(collection(db, "quizzes"), (snapshot) => {
-            const list = document.getElementById('quizzesContainer');
-            list.innerHTML = "";
-
-            if (snapshot.empty) {
-                list.innerHTML = `
-                    <div class="text-center py-6 text-slate-500 text-xs">
-                        <i class="fa-solid fa-circle-info text-lg mb-2"></i>
-                        <p>لا توجد اختبارات منشورة اليوم. نم جيداً يا بطل!</p>
-                    </div>
-                `;
-                return;
-            }
-
-            snapshot.forEach((quizDoc) => {
-                const quiz = quizDoc.data();
-                const quizId = quizDoc.id;
-
-                const completedQuizzes = currentStudentData?.completedQuizzes || [];
-                const isSolved = completedQuizzes.includes(quizId);
-                const qCount = quiz.questions ? quiz.questions.length : 1;
-
-                let actionButton = "";
-                if (isSolved) {
-                    actionButton = `
-                        <button disabled class="w-full py-2 bg-emerald-950/20 text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-bold flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-circle-check"></i> تم الحل بنجاح!
-                        </button>
-                    `;
-                } else {
-                    actionButton = `
-                        <button onclick="startQuiz('${quizId}', ${JSON.stringify(quiz).replace(/"/g, '&quot;')})" class="w-full py-2 bg-gradient-to-r from-logoGold to-logoGoldHover text-logoDark rounded-lg text-xs font-extrabold hover:shadow-lg hover:shadow-logoGold/20 transition duration-300 transform active:scale-95 flex items-center justify-center gap-2 shadow-md">
-                            <i class="fa-solid fa-rocket class='animate-pulse'"></i> ابدأ حل الاختبار (${qCount} أسئلة)
-                        </button>
-                    `;
-                }
-
-                list.innerHTML += `
-                    <div class="bg-logoDark/60 border border-logoGold/15 p-4 rounded-xl space-y-3 hover:border-logoGold/40 transition duration-300">
-                        <div>
-                            <h4 class="font-bold text-xs text-white">${quiz.title}</h4>
-                            <p class="text-[10px] text-logoGold mt-1"><i class="fa-solid fa-clock"></i> اختبار تفاعلي سريع</p>
-                        </div>
-                        ${actionButton}
-                    </div>
-                `;
+            const list = document.getElementById('quizzesContainer'); list.innerHTML = "";
+            let counter = 0;
+            snapshot.forEach(docSnap => {
+                const quiz = docSnap.data(); const quizId = docSnap.id;
+                if (currentStudentData && quiz.grade && quiz.grade !== currentStudentData.grade) return;
+                counter++;
+                const isSolved = (currentStudentData?.completedQuizzes || []).includes(quizId);
+                let btn = isSolved ? `<button disabled class="w-full py-2 bg-emerald-950/20 text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-bold">✓ تم الحل</button>` : `
+                    <button onclick="startQuiz('${quizId}', ${JSON.stringify(quiz).replace(/"/g, '&quot;')})" class="w-full py-2 bg-logoGold text-logoDark font-extrabold rounded-lg text-xs hover:bg-logoGoldHover transition">ابدأ التحدي البطل 🚀</button>`;
+                list.innerHTML += `<div class="bg-logoDark/60 border border-logoGold/15 p-4 rounded-xl space-y-3"><div><h4 class="font-bold text-xs text-white">${quiz.title}</h4></div>${btn}</div>`;
             });
+            if(counter===0) list.innerHTML = `<p class="text-center text-xs text-slate-500 py-4">لا توجد اختبارات متاحة لصفك حالياً.</p>`;
         });
 
-        // دالة تفعيل وبدء الاختبار المتعدد
-        window.startQuiz = (quizId, quizData) => {
-            activeQuizId = quizId;
-            activeQuizData = quizData;
-            
-            if (quizData.questions && quizData.questions.length > 0) {
-                quizQuestionsList = quizData.questions;
-            } else {
-                quizQuestionsList = [{
-                    question: quizData.question,
-                    options: quizData.options,
-                    correctIndex: quizData.correctIndex
-                }];
-            }
-
-            currentQuestionIndex = 0;
-            correctAnswersCount = 0;
-            selectedOptionIndex = null;
-
-            document.getElementById('modalQuizTitle').innerText = quizData.title;
-            loadQuestionStep();
-
-            const modal = document.getElementById('quizModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => {
-                modal.firstElementChild.classList.remove('scale-95');
-                modal.firstElementChild.classList.add('scale-100');
-            }, 50);
+        window.startQuiz = (id, data) => {
+            activeQuizId = id; activeQuizData = data; isFeedbackPhase = false;
+            quizQuestionsList = data.questions || [{ question: data.question, options: data.options, correctIndex: data.correctIndex }];
+            currentQuestionIndex = 0; correctAnswersCount = 0; selectedOptionIndex = null;
+            document.getElementById('modalQuizTitle').innerText = data.title; loadQuestionStep();
+            const modal = document.getElementById('quizModal'); modal.classList.remove('hidden'); modal.classList.add('flex');
         };
 
         function loadQuestionStep() {
-            selectedOptionIndex = null;
-            const currentQuestion = quizQuestionsList[currentQuestionIndex];
-
-            document.getElementById('modalQuizProgress').innerText = `السؤال ${currentQuestionIndex + 1} من ${quizQuestionsList.length}`;
-            document.getElementById('modalQuestionText').innerText = currentQuestion.question;
-
-            const submitBtnText = document.getElementById('quizSubmitBtnText');
-            if (currentQuestionIndex === quizQuestionsList.length - 1) {
-                submitBtnText.innerText = "إنهاء وتصحيح الاختبار";
-            } else {
-                submitBtnText.innerText = "السؤال التالي";
-            }
-
-            const optionsContainer = document.getElementById('modalOptionsContainer');
-            optionsContainer.innerHTML = "";
-
-            currentQuestion.options.forEach((opt, index) => {
-                optionsContainer.innerHTML += `
-                    <button onclick="selectQuizOption(${index})" id="opt-btn-${index}" class="w-full text-right p-3.5 bg-logoDark hover:bg-logoNavy border border-logoGold/20 hover:border-logoGold rounded-xl text-xs transition-all duration-200 flex justify-between items-center group">
-                        <span class="text-slate-100 group-hover:text-white font-semibold">${opt}</span>
-                        <span class="h-4 w-4 rounded-full border-2 border-slate-600 group-hover:border-logoGold flex items-center justify-center text-[9px] text-white" id="indicator-${index}"></span>
-                    </button>
-                `;
+            selectedOptionIndex = null; isFeedbackPhase = false;
+            const q = quizQuestionsList[currentQuestionIndex];
+            document.getElementById('modalQuizProgress').innerText = `السؤال ${currentQuestionIndex+1} من ${quizQuestionsList.length}`;
+            document.getElementById('modalQuestionText').innerText = q.question;
+            document.getElementById('quizSubmitBtnText').innerText = currentQuestionIndex === quizQuestionsList.length - 1 ? "إنهاء الاختبار" : "السؤال التالي";
+            
+            const container = document.getElementById('modalOptionsContainer'); container.innerHTML = "";
+            q.options.forEach((opt, idx) => {
+                container.innerHTML += `
+                    <button onclick="selectQuizOption(${idx})" id="opt-btn-${idx}" class="w-full text-right p-3.5 bg-logoDark border border-logoGold/20 rounded-xl text-xs flex justify-between items-center text-slate-200">
+                        <span>${opt}</span><span class="h-4 w-4 rounded-full border border-slate-600" id="indicator-${idx}"></span>
+                    </button>`;
             });
         }
 
-        window.selectQuizOption = (index) => {
+        window.selectQuizOption = (idx) => {
+            if (isFeedbackPhase) return;
             if (selectedOptionIndex !== null) {
-                const prevBtn = document.getElementById(`opt-btn-${selectedOptionIndex}`);
-                const prevIndicator = document.getElementById(`indicator-${selectedOptionIndex}`);
-                if (prevBtn) {
-                    prevBtn.className = "w-full text-right p-3.5 bg-logoDark hover:bg-logoNavy border border-logoGold/20 hover:border-logoGold rounded-xl text-xs transition-all duration-200 flex justify-between items-center group";
-                    prevIndicator.className = "h-4 w-4 rounded-full border-2 border-slate-600 flex items-center justify-center text-[9px] text-white";
-                    prevIndicator.innerHTML = "";
-                }
+                document.getElementById(`opt-btn-${selectedOptionIndex}`).className = "w-full text-right p-3.5 bg-logoDark border border-logoGold/20 rounded-xl text-xs flex justify-between items-center text-slate-200";
+                document.getElementById(`indicator-${selectedOptionIndex}`).className = "h-4 w-4 rounded-full border border-slate-600";
+                document.getElementById(`indicator-${selectedOptionIndex}`).innerText = "";
             }
-
-            selectedOptionIndex = index;
-            const currentBtn = document.getElementById(`opt-btn-${index}`);
-            const currentIndicator = document.getElementById(`indicator-${index}`);
-            
-            currentBtn.className = "w-full text-right p-3.5 bg-logoNavy border-2 border-logoGold rounded-xl text-xs transition-all duration-200 flex justify-between items-center group";
-            currentIndicator.className = "h-4 w-4 rounded-full bg-logoGold flex items-center justify-center text-[9px] text-logoDark font-bold";
-            currentIndicator.innerHTML = "✓";
-        };
-
-        window.closeQuizModal = () => {
-            const modal = document.getElementById('quizModal');
-            modal.firstElementChild.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }, 200);
+            selectedOptionIndex = idx;
+            document.getElementById(`opt-btn-${idx}`).className = "w-full text-right p-3.5 bg-logoNavy border-2 border-logoGold rounded-xl text-xs flex justify-between items-center text-white font-bold";
+            document.getElementById(`indicator-${idx}`).className = "h-4 w-4 rounded-full bg-logoGold flex items-center justify-center text-[10px] text-logoDark font-bold";
+            document.getElementById(`indicator-${idx}`).innerText = "✓";
         };
 
         document.getElementById('submitQuizAnswerBtn').addEventListener('click', async () => {
-            if (selectedOptionIndex === null) {
-                window.showToast("تنبيه هائل!", "يرجى تحديد إجابة واحدة أولاً يا بطل لتتمكن من المتابعة!", "⚠️");
-                return;
-            }
+            if (isFeedbackPhase || selectedOptionIndex === null) return;
+            isFeedbackPhase = true;
+            const q = quizQuestionsList[currentQuestionIndex]; const correct = q.correctIndex;
 
-            const currentQuestion = quizQuestionsList[currentQuestionIndex];
-            if (selectedOptionIndex === currentQuestion.correctIndex) {
-                correctAnswersCount++;
-            }
+            document.getElementById(`opt-btn-${correct}`).className = "w-full text-right p-3.5 bg-emerald-600 text-white border-2 border-emerald-400 rounded-xl text-xs flex justify-between items-center font-bold";
+            if (selectedOptionIndex !== correct) {
+                document.getElementById(`opt-btn-${selectedOptionIndex}`).className = "w-full text-right p-3.5 bg-rose-600 text-white border-2 border-rose-400 rounded-xl text-xs flex justify-between items-center font-bold";
+            } else { correctAnswersCount++; }
 
-            if (currentQuestionIndex < quizQuestionsList.length - 1) {
-                currentQuestionIndex++;
-                loadQuestionStep();
-            } else {
-                const pointsEarned = correctAnswersCount * 10;
-                const currentScore = currentStudentData.score || 0;
-                const newScore = currentScore + pointsEarned;
-                
-                const currentCompleted = currentStudentData.completedQuizzes || [];
-                if (!currentCompleted.includes(activeQuizId)) {
-                    currentCompleted.push(activeQuizId);
-                }
-
-                try {
-                    await updateDoc(doc(db, "students", studentPhone), {
-                        score: newScore,
-                        completedQuizzes: currentCompleted
-                    });
-
+            setTimeout(async () => {
+                if (currentQuestionIndex < quizQuestionsList.length - 1) {
+                    currentQuestionIndex++; loadQuestionStep();
+                } else {
+                    const points = correctAnswersCount * 10;
+                    const comp = currentStudentData.completedQuizzes || []; comp.push(activeQuizId);
+                    await updateDoc(doc(db, "students", studentPhone), { score: (currentStudentData.score||0)+points, completedQuizzes: comp });
                     closeQuizModal();
-
-                    if (pointsEarned > 0) {
-                        confetti({
-                            particleCount: 140,
-                            spread: 90,
-                            origin: { y: 0.6 }
-                        });
-                        window.showToast(
-                            "تفوق ساحق! 🎉🏆", 
-                            `أحسنت يا بطل! أجبت على ${correctAnswersCount} من أصل ${quizQuestionsList.length} أسئلة بشكل صحيح، وحصلت على ${pointsEarned} نقطة إضافية متصدرة لوحة الشرف!`, 
-                            "🥇"
-                        );
-                    } else {
-                        window.showToast(
-                            "حظاً أوفر! 💫", 
-                            `لم تجب على أي سؤال بشكل صحيح هذه المرة. راجع ملخص الأستاذ خالد وحاول بجد في الاختبارات القادمة!`, 
-                            "💡"
-                        );
-                    }
-
-                } catch (error) {
-                    console.error("Error updating score: ", error);
-                    window.showToast("عذراً!", "حدث مشكلة غير متوقعة أثناء الاتصال بالسيرفر لحفظ النقاط.", "⚠️");
+                    if(points > 0) { confetti({ particleCount: 100, spread: 60 }); }
+                    window.showToast("تم إكمال التحدي!", `حصلت على ${points} نقطة جديدة مضافة لرصيدك!🏆`);
                 }
-            }
+            }, 1500);
         });
 
-        window.logout = async () => {
-            await updateOnlineStatus(false);
-            localStorage.removeItem('loggedInUser');
-            window.location.href = 'index.html';
-        };
+        window.closeQuizModal = () => { document.getElementById('quizModal').classList.add('hidden'); };
+        window.contactTeacher = () => { window.open(`https://wa.me/201021463131?text=${encodeURIComponent("أهلاً أستاذي خالد، أنا البطل: " + (currentStudentData?.name||"") + "، لدي سؤال بخصوص المنصة...")}`, '_blank'); };
+        window.logout = async () => { await updateOnlineStatus(false); localStorage.removeItem('loggedInUser'); window.location.href = 'index.html'; };
+        window.addEventListener('beforeunload', () => updateOnlineStatus(false));
 
-        window.addEventListener('beforeunload', () => {
-            updateOnlineStatus(false);
+        const notiQuery = query(collection(db, "notifications"), orderBy("createdAt", "desc"), limit(1));
+        onSnapshot(notiQuery, (snap) => {
+            snap.forEach(doc => {
+                const n = doc.data(); document.getElementById('noticeboardBanner').classList.remove('hidden');
+                document.getElementById('noticeTextContainer').innerHTML = `<strong>${n.title}:</strong> ${n.body}`;
+            });
         });
-        // --- مستمع الإشعارات اللحظي ---
-// هذا الكود يراقب أي إشعار جديد يكتبه المعلم ويظهره للطالب فوراً
-import { query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-const notiQuery = query(collection(db, "notifications"), orderBy("createdAt", "desc"), limit(1));
-
-onSnapshot(notiQuery, (snapshot) => {
-    snapshot.forEach((doc) => {
-        const noti = doc.data();
-        const banner = document.getElementById('noticeboardBanner'); // البانر الموجود في صفحة الطالب
-        const textContainer = document.getElementById('noticeTextContainer');
-        
-        if (banner && textContainer) {
-            banner.classList.remove('hidden'); // إظهار البانر إذا كان مخفياً
-            textContainer.innerHTML = `
-                <i class="fa-solid fa-bullhorn ml-2"></i>
-                <strong>${noti.title}:</strong> ${noti.body}
-            `;
-        }
-    });
-});
-
     </script>
 </body>
 </html>
