@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحكم المعلم | العربية ببساطة</title>
+    
+    <!-- 🛡️ حارس البوابة الفوري: يطرد أي شخص يحاول الدخول عبر الرابط مباشرة دون تسجيل دخول -->
+    <script>
+        if (!localStorage.getItem('loggedInUser')) {
+            alert("عذراً، يجب تسجيل الدخول أولاً!");
+            window.location.href = 'index.html';
+        }
+    </script>
+
     <!-- استدعاء خط Cairo والتصميم الاحترافي Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -23,7 +32,6 @@
             }
         }
     </script>
-    <body id="teacher-page" style="display: none;"></body>
     
     <style>
         body {
@@ -41,18 +49,6 @@
         ::-webkit-scrollbar-thumb { background: #112244; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.1); }
         ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
     </style>
-    <script>  
-firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-        // إذا لم يسجل دخول.. اطرده فوراً لصفحة الدخول
-        window.location.href = 'index.html';
-    } else {
-        // إذا كان مسجل دخول.. أظهر له محتويات الصفحة الآن
-        document.getElementById('teacher-page').style.display = 'block';
-    }
-});
-
-    </script>
 </head>
 <body class="text-slate-100 min-h-screen pb-12 bg-gradient-to-b from-[#0b162c] via-[#0d1b36] to-[#0b162c]">
 
@@ -111,7 +107,7 @@ firebase.auth().onAuthStateChanged((user) => {
             <!-- العمود الأيمن العريض (8 كولوم): الإرسال والمحتوى والطلاب -->
             <div class="lg:col-span-8 space-y-8">
                 
-                <!-- 🎯 جديد وحصري: صندوق إرسال الإشعارات الفورية للأبطال -->
+                <!-- 🎯 صندوق إرسال الإشعارات الفورية للأبطال -->
                 <div class="bg-logoNavy/80 border border-logoGold/20 p-6 rounded-2xl shadow-xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-logoGold/5 rounded-full blur-2xl pointer-events-none"></div>
                     <h2 class="text-xl font-bold text-logoGold mb-4 flex items-center gap-2">
@@ -323,8 +319,6 @@ firebase.auth().onAuthStateChanged((user) => {
              messagingSenderId: "625152004618",
              appId: "1:625152004618:web:bbe0868696df8a050145f3",
              measurementId: "G-5WNS7G7VDL"
-
-
         };
 
         const app = initializeApp(firebaseConfig);
@@ -435,7 +429,6 @@ firebase.auth().onAuthStateChanged((user) => {
             }
 
             try {
-                // حفظ الإشعار في مجموعة "notifications" السحابية مع التوقيت لتظهر في بوابة الطالب
                 await addDoc(collection(db, "notifications"), {
                     title: title,
                     body: body,
@@ -480,7 +473,7 @@ firebase.auth().onAuthStateChanged((user) => {
             }
         };
 
-        // 2. وظيفة حذف الطالب اللحظية الفورية والمصلحة من التعليق البرمجي
+        // 2. وظيفة حذف الطالب اللحظية الفورية
         window.deleteStudent = async (phone) => {
             showConfirmDialog("تأكيد حذف البطل؟", "هل أنت متأكد تماماً من رغبتك في حذف بيانات هذا الطالب نهائياً من قاعدة البيانات والمنصة؟", async () => {
                 try {
@@ -563,7 +556,6 @@ firebase.auth().onAuthStateChanged((user) => {
         };
 
         // --- نظام التحكم التفاعلي بالأسئلة المتعددة للاختبار الشامل ---
-
         window.addQuestionToDraft = () => {
             const questionText = document.getElementById('quizQuestion').value.trim();
             const opt1 = document.getElementById('opt1').value.trim();
@@ -659,30 +651,11 @@ firebase.auth().onAuthStateChanged((user) => {
             }
         };
 
-        // دالة الخروج من النظام
+        // دالة الخروج من النظام التلقائي
         window.logout = () => {
             localStorage.removeItem('loggedInUser');
             window.location.href = 'index.html';
         };
-    </script>
-    <script>
-        // مراقبة حالة تسجيل الدخول
-أنشئ_حارس_البوابة();
-
-function أنشئ_حارس_البوابة() {
-    // نستخدم الـ Auth الخاص بـ Firebase للتأكد من وجود مستخدم
-    firebase.auth().onAuthStateChanged((user) => {
-        if (!user) {
-            // إذا لم يكن هناك مستخدم مسجل دخول (حاول الدخول عبر الرابط مباشرة)
-            alert("عذراً، يجب تسجيل الدخول أولاً!");
-            window.location.href = 'index.html'; // توجيهه فوراً لصفحة الدخول
-        } else {
-            console.log("مرحباً بك أيها المعلم، تم التحقق من هويتك بنجاح.");
-            // هنا يكمل الكود الخاص بك لعرض بيانات المعلم
-        }
-    });
-}
-
     </script>
 </body>
 </html>
