@@ -669,6 +669,12 @@ function أنشئ_حارس_البوابة() {
         }
     });
 }
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+        alert("عذراً، يجب تسجيل الدخول أولاً!");
+        window.location.href = 'index.html';
+    }
+});
     </script>
 </body>
 </html>
