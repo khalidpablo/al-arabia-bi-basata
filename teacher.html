@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحكم المعلم | العربية ببساطة</title>
+    <!-- استدعاء خط Cairo والتصميم الاحترافي Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        logoDark: '#0b162c',    /* الكحلي الداكن الخلفي */
+                        logoNavy: '#112244',    /* الكحلي المتوسط للكروت والإطارات */
+                        logoGold: '#d4af37',    /* الذهبي الملكي للرموز والأزرار */
+                        logoGoldHover: '#aa8c2c' /* ذهبي داكن عند تمرير الماوس */
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b162c;
+        }
+        /* تأثير التوهج عند التركيز على المدخلات */
+        .gold-focus:focus {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+        /* تخصيص السكرول بار ليناسب الفخامة الداكنة */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0b162c; }
+        ::-webkit-scrollbar-thumb { background: #112244; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.1); }
+        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen pb-12 bg-gradient-to-b from-[#0b162c] via-[#0d1b36] to-[#0b162c]">
+
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+        
+        <!-- الهيدر السينمائي الفخم الموحد اللوجو والهوية -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 py-6 border-b border-logoGold/20 gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-logoGold shadow-lg shadow-logoGold/10 bg-logoDark relative">
+                    <img src="logo.png" alt="لوجو العربية ببساطة" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150/0b162c/d4af37?text=ض'">
+                    <span class="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-logoGold rounded-full shadow-md shadow-logoGold"></span>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-logoGold to-white tracking-wide">
+                        لوحة تحكم الأستاذ خالد
+                    </h1>
+                    <p class="text-xs text-slate-400 font-semibold mt-0.5">لوحة التحكم الرسمية لإدارة المحتوى والأبطال وإرسال التنبيهات</p>
+                </div>
+            </div>
+            
+            <button onclick="logout()" class="px-5 py-2.5 border border-red-500/30 text-red-400 rounded-xl font-bold hover:bg-red-950/20 transition duration-300 text-xs flex items-center gap-2">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج بأمان
+            </button>
+        </header>
+
+        <!-- 📊 كروت الإحصائيات السريعة (تحديث تلقائي) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <div class="bg-logoNavy/60 backdrop-blur-md border border-logoGold/10 p-5 rounded-2xl flex items-center justify-between shadow-xl">
+                <div>
+                    <p class="text-xs font-bold text-slate-400 mb-1">إجمالي الفرسان المسجلين</p>
+                    <h3 id="statsCount" class="text-3xl font-black text-logoGold">0</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-logoGold/10 flex items-center justify-center text-logoGold text-xl"><i class="fa-solid fa-users"></i></div>
+            </div>
+            <div class="bg-logoNavy/60 backdrop-blur-md border border-logoGold/10 p-5 rounded-2xl flex items-center justify-between shadow-xl">
+                <div>
+                    <p class="text-xs font-bold text-slate-400 mb-1">حالة السيرفر والربط</p>
+                    <h3 class="text-sm font-bold text-emerald-400 flex items-center gap-1.5 mt-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> مستقر ونشط الآن
+                    </h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xl"><i class="fa-solid fa-satellite-dish"></i></div>
+            </div>
+            <div class="bg-logoNavy/60 backdrop-blur-md border border-logoGold/10 p-5 rounded-2xl flex items-center justify-between shadow-xl">
+                <div>
+                    <p class="text-xs font-bold text-slate-400 mb-1">توقيت المنصة الحالي</p>
+                    <h3 id="liveClock" class="text-lg font-extrabold text-white mt-1" dir="ltr">--:-- --</h3>
+                </div>
+                <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 text-xl"><i class="fa-regular fa-clock"></i></div>
+            </div>
+        </div>
+
+        <!-- شبكة التحكم الأساسية الموزعة باحترافية -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- العمود الأيمن العريض (8 كولوم): الإرسال والمحتوى والطلاب -->
+            <div class="lg:col-span-8 space-y-8">
+                
+                <!-- 🎯 جديد وحصري: صندوق إرسال الإشعارات الفورية للأبطال -->
+                <div class="bg-logoNavy/80 border border-logoGold/20 p-6 rounded-2xl shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-logoGold/5 rounded-full blur-2xl pointer-events-none"></div>
+                    <h2 class="text-xl font-bold text-logoGold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-bullhorn text-logoGold animate-bounce"></i> إرسال إشعار فوري وتنبيه هام للطلاب
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5 mr-1">عنوان الإشعار أو التنبيه:</label>
+                            <input type="text" id="notiTitle" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-xl focus:outline-none gold-focus transition text-sm font-bold" placeholder="مثال: تنبيه هام بخصوص الواجب">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5 mr-1">نص الرسالة أو تفاصيل التنبيه الموجه للطلاب:</label>
+                            <textarea id="notiBody" rows="3" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-xl focus:outline-none gold-focus transition text-sm resize-none" placeholder="اكتب هنا تفاصيل الرسالة، مثل: يرجى العلم أنه تم رفع اختبار النحو الجديد ويجب حله قبل موعد المحاضرة القادمة..."></textarea>
+                        </div>
+                        
+                        <button onclick="sendGlobalNotification()" class="w-full bg-gradient-to-r from-logoGold to-logoGoldHover text-logoDark font-black py-3.5 px-6 rounded-xl transition duration-300 transform active:scale-95 shadow-lg shadow-logoGold/10 flex justify-center items-center gap-2 text-sm">
+                            <i class="fa-solid fa-paper-plane"></i> إرسال ونشر الإشعار فوراً في بوابة الطالب
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- جدول قائمة الطلاب المطور زجاجياً -->
+                <div class="bg-logoNavy/80 border border-logoGold/10 p-6 rounded-2xl shadow-xl">
+                    <div class="flex justify-between items-center mb-4 border-b border-logoGold/10 pb-3">
+                        <h2 class="text-xl font-bold text-logoGold flex items-center gap-2">
+                            <i class="fa-solid fa-users-viewfinder"></i> قائمة الفرسان المسجلين بالمنصة
+                        </h2>
+                        <span id="studentsCount" class="bg-logoDark px-3 py-1 rounded-full text-xs text-logoGold border border-logoGold/20 font-bold">0 أبطال</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-right border-collapse">
+                            <thead>
+                                <tr class="text-logoGold border-b border-logoGold/10 text-xs font-bold">
+                                    <th class="p-3">اسم البطل</th>
+                                    <th class="p-3">رقم الهاتف (اسم المستخدم)</th>
+                                    <th class="p-3 text-center">الحالة اللحظية</th>
+                                    <th class="p-3 text-center">الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody" class="text-sm">
+                                <tr>
+                                    <td colspan="4" class="p-6 text-center text-slate-400">جاري فحص وتحميل قائمة الأبطال...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- إضافة درس سحابي جديد -->
+                <div class="bg-logoNavy/80 border border-logoGold/10 p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-xl font-bold text-logoGold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> رفع ونشر درس جديد (عبر روابط Google Drive أو YouTube)
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5 mr-1">عنوان الدرس التعليمي الجديد:</label>
+                            <input type="text" id="lessonTitle" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-xl focus:outline-none gold-focus transition text-sm" placeholder="مثال: شرح درس الفاعل المرفوع بالتفصيل">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5 mr-1">رابط المشاركة السحابي المباشر:</label>
+                            <input type="url" id="lessonUrl" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-xl focus:outline-none gold-focus transition text-sm text-left" placeholder="ضع رابط الفيديو أو ملف الـ PDF هنا" dir="ltr">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5 mr-1">تصنيف ونوع المحتوى المرفوع:</label>
+                            <select id="lessonType" class="w-full p-3 bg-logoDark border border-logoGold/20 text-logoGold text-sm rounded-xl focus:outline-none cursor-pointer font-bold">
+                                <option value="video">🎥 محاضرة مرئية (فيديو تعليمي)</option>
+                                <option value="pdf">📄 ملخص أو ورقة عمل واجـب (ملف PDF)</option>
+                            </select>
+                        </div>
+
+                        <button onclick="saveCloudLesson()" class="w-full bg-logoGold hover:bg-logoGoldHover text-logoDark font-black py-3.5 rounded-xl transition duration-300 transform active:scale-95 shadow-lg flex justify-center items-center gap-2 text-sm">
+                            <i class="fa-solid fa-share-nodes"></i> نشر وتثبيت الدرس فوراً للأبطال
+                        </button>
+                    </div>
+                </div>
+
+                <!-- إنشاء اختبار كامل تفاعلي متعدد الأسئلة -->
+                <div class="bg-logoNavy/80 border border-logoGold/10 p-6 rounded-2xl shadow-xl space-y-5">
+                    <h2 class="text-xl font-bold text-logoGold flex items-center gap-2 border-b border-logoGold/10 pb-3">
+                        <i class="fa-solid fa-square-poll-horizontal"></i> إنشاء وبناء اختبار تفاعلي خيارات متعددة
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1.5 mr-1">عنوان الاختبار الرئيسي:</label>
+                            <input type="text" id="quizTitle" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-xl focus:outline-none gold-focus transition text-sm font-bold text-logoGold" placeholder="مثال: اختبار شامل على كان وأخواتها">
+                        </div>
+
+                        <!-- منشئ ومجمع الأسئلة الذكي -->
+                        <div class="p-4 bg-logoDark/60 rounded-xl border border-logoGold/20 space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 mb-1.5">نص السؤال الحالي:</label>
+                                <input type="text" id="quizQuestion" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-lg text-xs focus:outline-none gold-focus" placeholder="اكتب هنا السؤال الموجه للطالب...">
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                                <div>
+                                    <label class="block text-slate-400 mb-1">خيار (أ):</label>
+                                    <input type="text" id="opt1" class="w-full p-2.5 bg-logoNavy border border-logoGold/10 text-white rounded-lg focus:outline-none" placeholder="الخيار الأول">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-400 mb-1">خيار (ب):</label>
+                                    <input type="text" id="opt2" class="w-full p-2.5 bg-logoNavy border border-logoGold/10 text-white rounded-lg focus:outline-none" placeholder="الخيار الثاني">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-400 mb-1">خيار (ج):</label>
+                                    <input type="text" id="opt3" class="w-full p-2.5 bg-logoNavy border border-logoGold/10 text-white rounded-lg focus:outline-none" placeholder="الخيار الثالث">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-400 mb-1">خيار (د):</label>
+                                    <input type="text" id="opt4" class="w-full p-2.5 bg-logoNavy border border-logoGold/10 text-white rounded-lg focus:outline-none" placeholder="الخيار الرابع">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 mb-1">تحديد الإجابة النموذجية:</label>
+                                    <select id="correctAnswer" class="w-full p-2.5 bg-logoNavy border border-logoGold/20 text-logoGold text-xs rounded-lg cursor-pointer focus:outline-none font-bold">
+                                        <option value="1">خيار (أ) هو الصحيح</option>
+                                        <option value="2">خيار (ب) هو الصحيح</option>
+                                        <option value="3">خيار (ج) هو الصحيح</option>
+                                        <option value="4">خيار (د) هو الصحيح</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-end">
+                                    <button onclick="addQuestionToDraft()" class="w-full bg-logoNavy border border-logoGold/30 text-logoGold hover:bg-logoNavy/60 font-bold py-2.5 rounded-lg text-xs transition flex justify-center items-center gap-1.5">
+                                        <i class="fa-solid fa-plus"></i> إضافة السؤال لمسودة الاختبار
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- قائمة مراجعة الأسئلة قبل الرفع والاعتماد -->
+                        <div class="bg-logoDark/40 p-4 rounded-xl border border-logoGold/10">
+                            <h3 class="text-xs font-bold text-logoGold flex justify-between items-center mb-3">
+                                <span><i class="fa-solid fa-clipboard-list"></i> الأسئلة المجمعة بالمسودة حتى الآن:</span>
+                                <span id="tempQuestionsCount" class="bg-logoNavy px-2.5 py-0.5 rounded-full text-slate-300 text-[11px]">0 أسئلة</span>
+                            </h3>
+                            <div id="tempQuestionsContainer" class="space-y-2 text-xs text-slate-300 max-h-44 overflow-y-auto pr-1">
+                                <p class="text-slate-500 text-center py-4">لا توجد أسئلة مضافة حالياً بالمسودة.</p>
+                            </div>
+                        </div>
+
+                        <button onclick="publishFullQuiz()" class="w-full bg-logoGold hover:bg-logoGoldHover text-logoDark font-black py-3.5 rounded-xl transition duration-300 shadow-lg flex justify-center items-center gap-2 text-sm">
+                            <i class="fa-solid fa-circle-check"></i> اعتماد ونشر الاختبار الشامل فوراً بالمنصة
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- العمود الأيسر الجانبي (4 كولوم): تسجيل طالب جديد بالتصميم الزجاجي المضيء -->
+            <div class="lg:col-span-4 sticky top-6 space-y-6">
+                <div class="bg-logoNavy/80 border border-logoGold/10 p-6 rounded-2xl shadow-xl">
+                    <h2 class="text-xl font-bold text-logoGold mb-5 text-center border-b border-logoGold/10 pb-3">
+                        <i class="fa-solid fa-user-plus text-xs ml-1"></i> تسجيل وإضافة بطل جديد
+                    </h2>
+                    
+                    <div class="space-y-4 text-right">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1 mr-1">اسم الطالب رباعي:</label>
+                            <input type="text" id="studentName" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-xl focus:outline-none gold-focus transition text-sm" placeholder="اكتب اسم الطالب كاملاً">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1 mr-1">رقم الهاتف (اسم المستخدم للدخول):</label>
+                            <input type="text" id="studentPhone" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-xl focus:outline-none gold-focus transition text-sm text-left" placeholder="01xxxxxxxxx" dir="ltr">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 mb-1 mr-1">كلمة المرور الشخصية للطالب:</label>
+                            <input type="password" id="studentPass" class="w-full p-3 bg-logoDark border border-logoGold/20 text-white rounded-xl focus:outline-none gold-focus transition text-sm text-left" placeholder="••••••••" dir="ltr">
+                        </div>
+
+                        <button onclick="addStudent()" class="w-full mt-2 bg-gradient-to-r from-logoGold to-logoGoldHover text-logoDark font-black py-3.5 rounded-xl transition duration-300 transform active:scale-95 shadow-lg shadow-logoGold/10 text-sm">
+                            إضافة وحفظ الطالب بالسيرفر
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- نافذة التنبيهات المخصصة عالية الجودة والسرعة وبديلة الـ Alerts التقليدية -->
+    <div id="customModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-logoNavy border border-logoGold/20 p-6 rounded-2xl max-w-md w-full mx-4 shadow-2xl text-center transform scale-95 transition-transform duration-300">
+            <div id="modalIcon" class="text-5xl mb-4"></div>
+            <h3 id="modalTitle" class="text-xl font-bold text-logoGold mb-2"></h3>
+            <p id="modalMessage" class="text-slate-300 text-sm mb-6 leading-relaxed"></p>
+            <div id="modalActions" class="flex justify-center gap-3">
+                <button id="modalPrimaryBtn" class="bg-logoGold hover:bg-logoGoldHover text-logoDark font-black px-6 py-2.5 rounded-xl text-xs transition">موافق</button>
+                <button id="modalSecondaryBtn" class="bg-transparent border border-slate-600 text-slate-300 hover:bg-slate-800/50 font-bold px-6 py-2.5 rounded-xl text-xs transition hidden">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- استدعاء ملفات ومكتبات Firebase السحابية بأمان تام -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // إبقاء إعدادات ومفاتيح السيرفر السحابي الخاصة بك دون أي تغيير
+        const firebaseConfig = {
+              apiKey: "AIzaSyBB49YLeVKt0X8IKeeqXBBigpRpr1fkfUk",
+              authDomain: "al-arabia-bi-basata.firebaseapp.com",
+              projectId: "al-arabia-bi-basata",
+             storageBucket: "al-arabia-bi-basata.firebasestorage.app",
+             messagingSenderId: "625152004618",
+             appId: "1:625152004618:web:bbe0868696df8a050145f3",
+             measurementId: "G-5WNS7G7VDL"
+
+
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // نظام النوافذ المنبثقة التفاعلية الذكية
+        const modal = document.getElementById('customModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalIcon = document.getElementById('modalIcon');
+        const primaryBtn = document.getElementById('modalPrimaryBtn');
+        const secondaryBtn = document.getElementById('modalSecondaryBtn');
+
+        let modalTimeout;
+        let tempQuestions = [];
+
+        // تشغيل الساعة الحية في واجهة المعلم لمتابعة التوقيت والانتظام
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const ampm = hours >= 12 ? 'مساءً' : 'صباحاً';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // الساعة 0 تصبح 12
+            document.getElementById('liveClock').innerText = `${hours}:${minutes} ${ampm}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function showMessage(title, message, type = 'success', onConfirm = null) {
+            clearTimeout(modalTimeout);
+            modalTitle.innerText = title;
+            modalMessage.innerText = message;
+            
+            if (type === 'success') {
+                modalIcon.innerHTML = '<i class="fa-solid fa-circle-check text-green-500"></i>';
+            } else if (type === 'error') {
+                modalIcon.innerHTML = '<i class="fa-solid fa-circle-exclamation text-red-500"></i>';
+            } else if (type === 'warning') {
+                modalIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-logoGold"></i>';
+            }
+
+            secondaryBtn.classList.add('hidden');
+            primaryBtn.onclick = () => {
+                hideModal();
+                if (onConfirm) onConfirm();
+            };
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                if (modal.firstElementChild) modal.firstElementChild.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function showConfirmDialog(title, message, onYes, onNo = null) {
+            clearTimeout(modalTimeout);
+            modalTitle.innerText = title;
+            modalMessage.innerText = message;
+            modalIcon.innerHTML = '<i class="fa-solid fa-circle-question text-logoGold"></i>';
+
+            secondaryBtn.classList.remove('hidden');
+            primaryBtn.onclick = async () => {
+                hideModal();
+                if (onYes) await onYes();
+            };
+            secondaryBtn.onclick = () => {
+                hideModal();
+                if (onNo) onNo();
+            };
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                if (modal.firstElementChild) modal.firstElementChild.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function hideModal() {
+            modal.classList.remove('opacity-100');
+            if (modal.firstElementChild) modal.firstElementChild.classList.add('scale-95');
+            modalTimeout = setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // الاستماع الفوري ومزامنة اللوجو مع قاعدة البيانات السحابية
+        onSnapshot(doc(db, "settings", "logo"), (docSnap) => {
+            if (docSnap.exists() && docSnap.data().base64) {
+                const logoImgs = document.querySelectorAll('img[alt="لوجو العربية ببساطة"]');
+                logoImgs.forEach(img => {
+                    img.src = docSnap.data().base64;
+                });
+            }
+        });
+
+        window.showMessage = showMessage;
+        window.showConfirmDialog = showConfirmDialog;
+
+        // 🌟 [ميزة جديدة حصرياً]: وظيفة إرسال ونشر الإشعارات العامة لجميع بوابة الطلاب
+        window.sendGlobalNotification = async () => {
+            const title = document.getElementById('notiTitle').value.trim();
+            const body = document.getElementById('notiBody').value.trim();
+
+            if (!title || !body) {
+                showMessage("بيانات ناقصة!", "برجاء كتابة عنوان الإشعار ونص الرسالة المراد إرسالها للفرسان أولاً.", "warning");
+                return;
+            }
+
+            try {
+                // حفظ الإشعار في مجموعة "notifications" السحابية مع التوقيت لتظهر في بوابة الطالب
+                await addDoc(collection(db, "notifications"), {
+                    title: title,
+                    body: body,
+                    createdAt: new Date().toISOString()
+                });
+
+                showMessage("📢 تم النشر والإرسال!", `تم بث التنبيه بنجاح وسيظهر لجميع الأبطال في لوحة التحكم الخاصة بهم فوراً.`, "success");
+                document.getElementById('notiTitle').value = "";
+                document.getElementById('notiBody').value = "";
+            } catch (error) {
+                console.error("Error sending notification: ", error);
+                showMessage("خطأ في الإرسال", "عذراً، تعذر إرسال الإشعار إلى السيرفر. يرجى مراجعة الاتصال.", "error");
+            }
+        };
+
+        // 1. وظيفة تسجيل وحفظ طالب جديد
+        window.addStudent = async () => {
+            const name = document.getElementById('studentName').value.trim();
+            const phone = document.getElementById('studentPhone').value.trim();
+            const pass = document.getElementById('studentPass').value.trim();
+
+            if (!name || !phone || !pass) {
+                showMessage("بيانات ناقصة!", "برجاء كتابة اسم الطالب، رقم الهاتف وكلمة المرور بالكامل أولاً لحفظ الحساب.", "warning");
+                return;
+            }
+
+            try {
+                await setDoc(doc(db, "students", phone), {
+                    name: name,
+                    password: pass,
+                    isOnline: false,
+                    score: null,
+                    completedQuizzes: []
+                });
+                showMessage("🎉 تم الحفظ!", `تم تسجيل البطل الحاصل على الحساب بنجاح في قاعدة البيانات السحابية.`, "success");
+                document.getElementById('studentName').value = "";
+                document.getElementById('studentPhone').value = "";
+                document.getElementById('studentPass').value = "";
+            } catch (error) {
+                console.error("Error adding student: ", error);
+                showMessage("خطأ في الاتصال", "فشل الاتصال بالسيرفر السحابي لحفظ بيانات البطل الجديد.", "error");
+            }
+        };
+
+        // 2. وظيفة حذف الطالب اللحظية الفورية والمصلحة من التعليق البرمجي
+        window.deleteStudent = async (phone) => {
+            showConfirmDialog("تأكيد حذف البطل؟", "هل أنت متأكد تماماً من رغبتك في حذف بيانات هذا الطالب نهائياً من قاعدة البيانات والمنصة؟", async () => {
+                try {
+                    await deleteDoc(doc(db, "students", phone));
+                    showMessage("تم الحذف بنجاح", "تمت إزالة بيانات الحساب بنجاح من جداول السيرفر.", "success");
+                } catch (error) {
+                    console.error("Error deleting student: ", error);
+                    showMessage("فشل الحذف", "حدث خطأ غير متوقع أثناء محاولة حذف الطالب من السيرفر.", "error");
+                }
+            });
+        };
+
+        // 3. مراقبة وجلب قائمة الأبطال والعدادات لحظياً دون الحاجة لعمل ريفريش
+        onSnapshot(collection(db, "students"), (snapshot) => {
+            const tbody = document.getElementById('studentsTableBody');
+            const countBadge = document.getElementById('studentsCount');
+            const statsCount = document.getElementById('statsCount');
+            tbody.innerHTML = "";
+            
+            if (snapshot.empty) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400 font-semibold"><i class="fa-solid fa-user-slash"></i> لا يوجد فرسان مسجلين بالمنصة حتى الآن.</td></tr>`;
+                countBadge.innerText = "0 أبطال";
+                statsCount.innerText = "0";
+                return;
+            }
+
+            countBadge.innerText = `${snapshot.size} أبطال`;
+            statsCount.innerText = snapshot.size;
+
+            snapshot.forEach((studentDoc) => {
+                const data = studentDoc.data();
+                const phone = studentDoc.id;
+                
+                const onlineStatus = data.isOnline 
+                    ? `<span class="text-[#0df2c9] font-bold flex items-center justify-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#0df2c9] animate-pulse"></span> متصل حالياً</span>` 
+                    : `<span class="text-slate-500 font-bold">● غير متصل</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="border-b border-logoGold/5 hover:bg-logoDark/40 transition duration-150">
+                        <td class="p-3.5 font-bold text-slate-200">${data.name}</td>
+                        <td class="p-3.5 text-slate-400 font-medium">${phone}</td>
+                        <td class="p-3.5 text-center text-xs">${onlineStatus}</td>
+                        <td class="p-3.5 text-center">
+                            <button onclick="deleteStudent('${phone}')" class="text-red-400 hover:text-red-500 font-bold transition duration-200">
+                                <i class="fa-solid fa-trash-can text-xs ml-1"></i> حذف
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }, (error) => {
+            console.error("Error fetching students: ", error);
+        });
+
+        // 4. وظيفة إرسال ونشر الدرس السحابي الجديد
+        window.saveCloudLesson = async () => {
+            const title = document.getElementById('lessonTitle').value.trim();
+            const url = document.getElementById('lessonUrl').value.trim();
+            const type = document.getElementById('lessonType').value;
+
+            if (!title || !url) {
+                showMessage("بيانات الدرس ناقصة!", "يرجى تعبئة عنوان الدرس ولصق رابط المحتوى أولاً قبل النشر.", "warning");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "lessons"), {
+                    title: title,
+                    url: url,
+                    type: type,
+                    createdAt: new Date().toISOString()
+                });
+
+                showMessage("🚀 تم النشر بنجاح!", `تم إضافة ونشر الدرس التعليمي الجديد "${title}" بنجاح للأبطال.`, "success");
+                document.getElementById('lessonUrl').value = "";
+            } catch (err) {
+                console.error("Error saving cloud lesson: ", err);
+                showMessage("فشل الحفظ", "حدث خطأ أثناء الاتصال بالسيرفر لإضافة المحاضرة.", "error");
+            }
+        };
+
+        // --- نظام التحكم التفاعلي بالأسئلة المتعددة للاختبار الشامل ---
+
+        window.addQuestionToDraft = () => {
+            const questionText = document.getElementById('quizQuestion').value.trim();
+            const opt1 = document.getElementById('opt1').value.trim();
+            const opt2 = document.getElementById('opt2').value.trim();
+            const opt3 = document.getElementById('opt3').value.trim();
+            const opt4 = document.getElementById('opt4').value.trim();
+            const correctVal = document.getElementById('correctAnswer').value;
+
+            if (!questionText || !opt1 || !opt2 || !opt3 || !opt4) {
+                showMessage("عناصر ناقصة!", "يرجى كتابة نص السؤال والخيارات الأربعة بالكامل قبل الإضافة للمسودة.", "warning");
+                return;
+            }
+
+            const questionObj = {
+                question: questionText,
+                options: [opt1, opt2, opt3, opt4],
+                correctIndex: parseInt(correctVal) - 1
+            };
+
+            tempQuestions.push(questionObj);
+            renderTempQuestions();
+
+            document.getElementById('quizQuestion').value = "";
+            document.getElementById('opt1').value = "";
+            document.getElementById('opt2').value = "";
+            document.getElementById('opt3').value = "";
+            document.getElementById('opt4').value = "";
+            document.getElementById('correctAnswer').value = "1";
+
+            showMessage("➕ أضيف للمسودة", "تم تضمين السؤال بنجاح، يمكنك إضافة أسئلة أخرى أو اعتماد النشر.", "success");
+        };
+
+        window.removeQuestionFromDraft = (index) => {
+            tempQuestions.splice(index, 1);
+            renderTempQuestions();
+        };
+
+        function renderTempQuestions() {
+            const container = document.getElementById('tempQuestionsContainer');
+            const countLabel = document.getElementById('tempQuestionsCount');
+            
+            countLabel.innerText = `${tempQuestions.length} أسئلة`;
+            container.innerHTML = "";
+
+            if (tempQuestions.length === 0) {
+                container.innerHTML = `<p class="text-slate-500 text-center py-4">لا توجد أسئلة مضافة حالياً بالمسودة.</p>`;
+                return;
+            }
+
+            tempQuestions.forEach((q, idx) => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between bg-logoNavy p-2.5 rounded-lg border border-logoGold/10 gap-3">
+                        <div class="flex-1">
+                            <span class="text-logoGold font-bold ml-1">${idx + 1}-</span>
+                            <span>${q.question}</span>
+                            <span class="block text-[10px] text-slate-400 mt-1">الخيار النموذجي: ${q.options[q.correctIndex]}</span>
+                        </div>
+                        <button onclick="removeQuestionFromDraft(${idx})" class="text-red-400 hover:text-red-500 px-2 py-1 font-bold">
+                            حذف
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        window.publishFullQuiz = async () => {
+            const quizTitle = document.getElementById('quizTitle').value.trim();
+
+            if (!quizTitle) {
+                showMessage("عنوان مفقود!", "برجاء إدخال عنوان أو اسم الاختبار الرئيسي أولاً قبل الاعتماد والرفع.", "warning");
+                return;
+            }
+
+            if (tempQuestions.length === 0) {
+                showMessage("الاختبار فارغ!", "يرجى بناء وإضافة سؤال واحد على الأقل داخل مسودة الاختبار قبل نشره.", "warning");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "quizzes"), {
+                    title: quizTitle,
+                    questions: tempQuestions,
+                    createdAt: new Date().toISOString()
+                });
+
+                showMessage("🎯 تم نشر الاختبار الشامل!", `تم تفعيل ونشر اختبار "${quizTitle}" ويحتوي على (${tempQuestions.length}) أسئلة تفاعلية للأبطال الحاضرين.`, "success");
+                document.getElementById('quizTitle').value = "";
+                tempQuestions = [];
+                renderTempQuestions();
+            } catch (error) {
+                console.error("Error publishing full quiz: ", error);
+                showMessage("فشل الرفع", "حدث خطأ مفاجئ أثناء إرسال بيانات الاختبار الإجمالي للسيرفر.", "error");
+            }
+        };
+
+        // دالة الخروج من النظام
+        window.logout = () => {
+            localStorage.removeItem('loggedInUser');
+            window.location.href = 'index.html';
+        };
+    </script>
+</body>
+</html>

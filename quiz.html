@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة العربية ببساطة - الاختبار الأسبوعي</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0f1a2c; color: #fff; padding: 30px; display: flex; justify-content: center; }
+        .quiz-container { background-color: #17263c; border: 1px solid #d4af37; border-radius: 15px; padding: 40px; width: 100%; max-width: 800px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); }
+        .quiz-header { border-bottom: 2px solid #2c3e50; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .quiz-title { color: #d4af37; font-size: 24px; }
+        .timer-box { background-color: #0f1a2c; padding: 10px 20px; border-radius: 8px; border: 1px solid #ff4d4d; color: #ff4d4d; font-weight: bold; }
+        .question-box { background-color: #1f334e; border-radius: 10px; padding: 20px; margin-bottom: 25px; border-right: 5px solid #d4af37; }
+        .question-text { font-size: 18px; margin-bottom: 15px; font-weight: 600; }
+        .options-list { list-style: none; }
+        .option-item { margin-bottom: 10px; background-color: #17263c; padding: 12px; border-radius: 6px; border: 1px solid #2c3e50; transition: 0.2s; }
+        .option-item:hover { border-color: #d4af37; background-color: #1b2d47; }
+        .option-item label { display: flex; align-items: center; cursor: pointer; width: 100%; }
+        .option-item input { margin-left: 10px; accent-color: #d4af37; }
+        .submit-btn { background-color: #d4af37; color: #0f1a2c; border: none; padding: 15px 30px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 20px; }
+        .submit-btn:hover { background-color: #aa8c2c; transform: translateY(-2px); }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #a0aec0; text-decoration: none; font-size: 14px; transition: 0.2s; }
+        .back-link:hover { color: #d4af37; }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1 class="quiz-title">📝 اختبار النحو الأسبوعي (المنادى)</h1>
+            <div class="timer-box">⏱️ الوقت المتبقي: 14:59</div>
+        </div>
+
+        <form action="student.html">
+            <div class="question-box">
+                <p class="question-text">١. يا خَالداً في الجنةِ أبشرْ. نوع المنادى هنا هو:</p>
+                <ul class="options-list">
+                    <li class="option-item"><label><input type="radio" name="q1" value="A"> شبيه بالمضاف</label></li>
+                    <li class="option-item"><label><input type="radio" name="q1" value="B"> مضاف</label></li>
+                    <li class="option-item"><label><input type="radio" name="q1" value="C"> نكرة غير مقصودة</label></li>
+                    <li class="option-item"><label><input type="radio" name="q1" value="D"> علم مفرد</label></li>
+                </ul>
+            </div>
+
+            <div class="question-box">
+                <p class="question-text">٢. حكم المنادى الشبيه بالمضاف يكون دائماً:</p>
+                <ul class="options-list">
+                    <li class="option-item"><label><input type="radio" name="q2" value="A"> مبني في محل نصب</label></li>
+                    <li class="option-item"><label><input type="radio" name="q2" value="B"> معرب منصوب</label></li>
+                    <li class="option-item"><label><input type="radio" name="q2" value="C"> مرفوع دائماً</label></li>
+                    <li class="option-item"><label><input type="radio" name="q2" value="D"> مجرور بالكسرة</label></li>
+                </ul>
+            </div>
+
+            <button type="submit" class="submit-btn">تسليم الإجابات وإنهاء الاختبار</button>
+        </form>
+
+        <a href="student.html" class="back-link">⬅️ العودة للوحة التحكم دون حل</a>
+    </div>
+
+</body>
+</html>
