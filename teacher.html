@@ -23,6 +23,7 @@
             }
         }
     </script>
+    <body id="teacher-page" style="display: none;"></body>
     
     <style>
         body {
@@ -40,6 +41,18 @@
         ::-webkit-scrollbar-thumb { background: #112244; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.1); }
         ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
     </style>
+    <script>  
+firebase.auth().onAuthStateChanged((user) => {
+    if (!user) {
+        // إذا لم يسجل دخول.. اطرده فوراً لصفحة الدخول
+        window.location.href = 'index.html';
+    } else {
+        // إذا كان مسجل دخول.. أظهر له محتويات الصفحة الآن
+        document.getElementById('teacher-page').style.display = 'block';
+    }
+});
+
+    </script>
 </head>
 <body class="text-slate-100 min-h-screen pb-12 bg-gradient-to-b from-[#0b162c] via-[#0d1b36] to-[#0b162c]">
 
@@ -669,12 +682,7 @@ function أنشئ_حارس_البوابة() {
         }
     });
 }
-firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-        alert("عذراً، يجب تسجيل الدخول أولاً!");
-        window.location.href = 'index.html';
-    }
-});
+
     </script>
 </body>
 </html>
