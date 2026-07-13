@@ -1,89 +1,261 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.16.0/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.16.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.16.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الدخول | العربية ببساطة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        logoDark: '#0b162c',    /* الكحلي الداكن من خلفية اللوجو */
+                        logoNavy: '#112244',    /* الكحلي المتوسط للكروت والإطارات */
+                        logoGold: '#d4af37',    /* الذهبي الملكي للأزرار والرموز */
+                        logoGoldHover: '#aa8c2c' /* ذهبي داكن عند تمرير الماوس */
+                    }
+                }
+            }
         }
-      });
     </script>
-  </body>
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #0b162c;
+            overflow-x: hidden;
+        }
+        /* تأثير التوهج للحقول */
+        .gold-input:focus {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+            border-color: #d4af37;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+            transform: translateY(-2px);
+        }
+        /* حركة الخلفية السينمائية المضيئة */
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 8s ease-in-out infinite;
+        }
+        /* تنعيم حركة اللوجو المتفاعل مع الماوس */
+        #interactiveLogoWrapper {
+            transition: transform 0.15s ease-out;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-stretch justify-center bg-[#0b162c]">
+
+    <div class="w-full min-h-screen flex flex-col md:flex-row-reverse items-stretch">
+        
+        <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#112244] via-[#0b162c] to-[#172b54] relative overflow-hidden items-center justify-center p-12 border-l border-logoGold/10">
+            <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-logoGold/10 rounded-full blur-3xl animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 4s;"></div>
+            
+            <div class="z-10 text-center space-y-6 max-w-lg">
+                <div class="inline-block px-4 py-1.5 bg-logoGold/10 border border-logoGold/30 rounded-full text-logoGold text-xs font-bold mb-2">
+                    ✨ مستقبل تعليم اللغة العربية بين يديك
+                </div>
+                <h2 class="text-4xl lg:text-5xl font-black text-white leading-tight">
+                    منصة <span class="text-transparent bg-clip-text bg-gradient-to-r from-logoGold to-yellow-400">العَرَبِيَّةُ بِبَسَاطَة</span> التعليمية
+               s </h2>
+                <p class="text-slate-300 text-sm leading-relaxed font-semibold">
+                    رحلتك نحو الدرجة النهائية تبدأ من هنا. شروحات تفاعلية، اختبارات ذكية، ومتابعة دورية لحظة بلحظة مع فرسان الأستاذ خالد وحيد.
+                </p>
+                <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-700/50 text-right">
+                    <div>
+                        <h4 class="text-logoGold text-lg font-black">٠١</h4>
+                        <p class="text-slate-400 text-[11px] font-bold">شرح مبسط وذكي</p>
+                    </div>
+                    <div>
+                        <h4 class="text-logoGold text-lg font-black">٠٢</h4>
+                        <p class="text-slate-400 text-[11px] font-bold">اختبارات دورية</p>
+                    </div>
+                    <div>
+                        <h4 class="text-logoGold text-lg font-black">٠٣</h4>
+                        <p class="text-slate-400 text-[11px] font-bold">دعم فني متواصل</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-4 text-center text-[10px] text-slate-500 font-bold">
+                جميع الحقوق محفوظة © ٢٠٢٦ لمنصة العربية ببساطة
+            </div>
+        </div>
+
+        <div class="w-full md:w-1/2 flex items-center justify-center p-6 sm:p-12 relative bg-gradient-to-b from-[#0b162c] via-[#0f1f3d] to-[#0b162c]">
+            
+            <div class="absolute top-10 left-10 w-72 h-72 bg-logoGold/5 rounded-full blur-3xl pointer-events-none md:hidden"></div>
+
+            <div class="w-full max-w-md bg-logoNavy/60 backdrop-blur-xl border border-logoGold/20 p-8 rounded-3xl shadow-2xl shadow-black/50 z-10 transition-all duration-500 hover:border-logoGold/30">
+                
+                <div class="text-center mb-8 relative">
+                    <div id="interactiveLogoWrapper" class="w-20 h-20 mx-auto rounded-full bg-logoDark border-2 border-logoGold p-0.5 shadow-xl shadow-logoGold/10 flex items-center justify-center overflow-hidden">
+                        
+                        <img src="رابط_صورة_جوجل_درايف_المباشر_هنا" alt="لوجو العربية ببساطة" class="w-full h-full object-cover rounded-full select-none pointer-events-none" onerror="this.src='https://placehold.co/150/0b162c/d4af37?text=ض'">
+                    
+                    </div>
+                    <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-logoGold to-white mt-4 tracking-wide md:hidden">
+                        العَرَبِيَّةُ بِبَسَاطَة
+                    </h1>
+                    <p class="text-sm text-slate-200 font-bold mt-3">مرحباً بك في بوابة الأبطال</p>
+                    <p class="text-xs text-slate-400 mt-1">سجل دخولك الآن للوصول إلى محاضراتك واختباراتك</p>
+                </div>
+
+                <hr class="border-logoGold/10 my-4">
+
+                <div class="space-y-4 text-right">
+                    <div>
+                        <label class="block text-xs font-bold text-logoGold mb-1.5 mr-1"><i class="fa-solid fa-phone text-[10px] ml-1"></i> رقم الهاتف أو اسم المستخدم:</label>
+                        <div class="relative">
+                            <span class="absolute right-3 top-3.5 text-slate-500"><i class="fa-solid fa-phone text-xs"></i></span>
+                            <input type="text" id="loginPhone" class="w-full p-3 pr-10 bg-logoDark border border-slate-700/80 text-white rounded-xl focus:outline-none gold-input transition text-left text-sm" placeholder="01xxxxxxxxx" dir="ltr">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-logoGold mb-1.5 mr-1"><i class="fa-solid fa-lock text-[10px] ml-1"></i> كلمة المرور الشخصية:</label>
+                        <div class="relative">
+                            <span class="absolute right-3 top-3.5 text-slate-500"><i class="fa-solid fa-lock text-xs"></i></span>
+                            <input type="password" id="loginPass" class="w-full p-3 pr-10 bg-logoDark border border-slate-700/80 text-white rounded-xl focus:outline-none gold-input transition text-left text-sm" placeholder="••••••••" dir="ltr">
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="handleLogin()" id="loginBtn" class="w-full mt-6 bg-gradient-to-r from-logoGold to-logoGoldHover text-logoDark font-black py-3.5 rounded-xl transition-all duration-300 btn-glow transform active:scale-95 shadow-lg shadow-logoGold/10 flex justify-center items-center gap-2 text-sm">
+                    <span>دخول المنصة الآن</span> <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+
+                <p id="errorMessage" class="text-red-400 text-xs font-bold transition-all duration-200 min-h-[1.25rem] text-center mt-3"></p>
+
+                <div class="mt-6 pt-4 border-t border-slate-700/50 text-center">
+                    <p class="text-[11px] text-slate-400 font-semibold mb-2.5">طالب جديد وتريد الانضمام لفرسان الأستاذ خالد؟</p>
+                    <a href="https://wa.me/201095300546" target="_blank" class="inline-flex items-center gap-2 bg-logoDark/80 hover:bg-logoDark border border-logoGold/20 hover:border-logoGold px-5 py-2 rounded-2xl transition duration-300 group shadow-md">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+                        <i class="fa-brands fa-whatsapp text-green-400 text-sm group-hover:scale-110 transition"></i>
+                        <span class="text-xs font-bold text-logoGold tracking-wide" dir="ltr">010 9530 0546</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // إعدادات الـ Firebase الخاصة بمتصفحك دون تغيير
+        const firebaseConfig = {
+            apiKey: "AIzaSyBB49YLeVKt0X8IKeeqXBBigpRpr1fkfUk",
+            authDomain: "al-arabia-bi-basata.firebaseapp.com",
+            projectId: "al-arabia-bi-basata",
+            storageBucket: "al-arabia-bi-basata.firebasestorage.app",
+            messagingSenderId: "625152004618",
+            appId: "1:625152004618:web:bbe0868696df8a050145f3",
+            measurementId: "G-5WNS7G7VDL"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // جعل اللوجو يتحرك ويلحق الماوس بشكل ثلاثي الأبعاد متناسق
+        const logoWrapper = document.getElementById('interactiveLogoWrapper');
+        document.addEventListener('mousemove', (e) => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const mouseX = e.clientX - (w / 2);
+            const mouseY = e.clientY - (h / 2);
+            const rotateX = -(mouseY / h) * 30;
+            const rotateY = (mouseX / w) * 30;
+            logoWrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+        });
+        document.addEventListener('mouseleave', () => {
+            logoWrapper.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+
+        // مزامنة صورة اللوجو لحظياً مع السيرفر السحابي في حال تحديثه
+        onSnapshot(doc(db, "settings", "logo"), (docSnap) => {
+            if (docSnap.exists() && docSnap.data().base64) {
+                const logoImgs = document.querySelectorAll('img[alt="لوجو العربية ببساطة"]');
+                logoImgs.forEach(img => {
+                    img.src = docSnap.data().base64;
+                });
+            }
+        });
+
+        window.handleLogin = async () => {
+            const phone = document.getElementById('loginPhone').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            const errMsg = document.getElementById('errorMessage');
+            const loginBtn = document.getElementById('loginBtn');
+
+            errMsg.innerText = "جاري التحقق من البيانات..."; 
+            errMsg.className = "text-amber-400 text-xs font-bold transition-all duration-200 min-h-[1.25rem]";
+
+            if (!phone || !pass) {
+                errMsg.innerText = "⚠️ برجاء إدخل رقم الهاتف وكلمة المرور أولاً.";
+                errMsg.className = "text-red-400 text-xs font-bold";
+                return;
+            }
+
+            loginBtn.disabled = true;
+
+            // التحقق من حساب المعلم أو المسؤول
+            if (
+                (phone === "01095300546" && pass === "khalid26") || 
+                (phone === "admin" && pass === "1234")
+            ) {
+                localStorage.setItem('loggedInUser', JSON.stringify({ name: "الأستاذ خالد وحيد", role: "admin" }));
+                window.location.href = 'teacher.html';
+                return;
+            }
+
+            try {
+                // البحث عن الطالب في السيرفر السحابي
+                const studentDoc = await getDoc(doc(db, "students", phone));
+
+                if (!studentDoc.exists()) {
+                    errMsg.innerText = "❌ عذراً، هذا الحساب غير مسجل بالمنصة.";
+                    errMsg.className = "text-red-400 text-xs font-bold";
+                    return;
+                }
+
+                const studentData = studentDoc.data();
+
+                if (studentData.password !== pass) {
+                    errMsg.innerText = "❌ كلمة المرور غير صحيحة، حاول مجدداً.";
+                    errMsg.className = "text-red-400 text-xs font-bold";
+                    return;
+                }
+
+                // تحديث حالة الطالب إلى متصل
+                await updateDoc(doc(db, "students", phone), {
+                    isOnline: true
+                });
+
+                localStorage.setItem('loggedInUser', JSON.stringify({ name: studentData.name, role: "student", phone: phone }));
+                window.location.href = 'student.html'; 
+
+            } catch (error) {
+                console.error("Login error: ", error);
+                errMsg.innerText = `⚠️ خطأ في الاتصال بالسيرفر: ${error.message}`;
+                errMsg.className = "text-red-400 text-xs font-bold";
+            } finally {
+                loginBtn.disabled = false;
+            }
+        };
+    </script>
+</body>
 </html>
