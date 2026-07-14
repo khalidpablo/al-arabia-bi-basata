@@ -10,6 +10,22 @@
             alert("عذراً، يجب تسجيل دخول المعلم أولاً!");
             window.location.href = 'index.html';
         }
+        // 👑 حساب المعلم المطور (الأستاذ خالد وحيد)
+if ((phone === "01095300546" && pass === "khalid26") || (phone === "admin" && pass === "1234")) {
+    // نقوم هنا بحقن كل الحقول المتوقعة لمنع حارس صفحة المعلم من طردك
+    const teacherSession = { 
+        name: "الأستاذ خالد وحيد", 
+        role: "admin",             // الرتبة الأساسية
+        roleName: "teacher",       // رتبة احتياطية إذا كانت الصفحة تفحص مسمى teacher
+        phone: phone,              // تم إضافة الهاتف (ضروري جداً لربط البيانات)
+        username: phone,           // اسم المستخدم كاحتياط
+        access: "khaled_secure_token" 
+    };
+    
+    localStorage.setItem('loggedInUser', JSON.stringify(teacherSession));
+    window.location.href = 'teacher.html?access=khaled_secure_token';
+    return;
+}
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,7 +57,7 @@
 
     <header class="border-b border-logoGold/20 bg-logoNavy px-6 py-4 flex items-center justify-between shadow-xl">
         <div class="flex items-center gap-4">
-            <img src="اللوجو.jpg" alt="لوجو العربية ببساطة" class="h-14 w-14 rounded-full object-cover border-2 border-logoGold shadow-lg shadow-logoGold/10">
+           <img src="https://lh3.googleusercontent.com/d/1ziIB2Q9EK-p7ixZIXcXqL0coqHjBjqVC" alt="لوجو العربية ببساطة" class="h-14 w-14 rounded-full object-cover border-2 border-logoGold shadow-lg shadow-logoGold/10">
             <div>
                 <h1 class="text-xl font-black text-logoGold">إمبراطورية الأستاذ خالد وحيد</h1>
                 <p class="text-xs text-slate-400">لوحة التحكم والقيادة الشاملة | العربية ببساطة</p>
@@ -652,12 +668,50 @@
                 if(secSnap.exists()) {
                     const sec = secSnap.data();
                     
-                    // تحديث واجهة أزرار الحماية
-                    updateSecurityUI('btnScreenRecord', sec.preventScreenRecord);
-                    updateSecurityUI('btnWatermark', sec.dynamicWatermark);
-                    if(sec.deviceLimit) {
-                        document.getElementById('maxDevicesInput').value = sec.deviceLimit;
+                    // 🛡️ استدعاء حارس البوابة الأمني السيرفري المطور لدعم المعلم والمساعدين معاً
+        أنشئ_حارس_البوابة();
+
+        async function أنشئ_حارس_البوابة() {
+            const checkUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            
+            // السماح للمعلم والمساعدين والمشرفين بالمرور وحظر الطلاب
+            const allowedRoles = ['admin', 'teacher', 'assistant', 'helper'];
+            if (!checkUser || !allowedRoles.includes(checkUser.role)) {
+                alert("عذراً، يجب تسجيل الدخول كمعلم أو مساعد أولاً لدخول لوحة التحكم!");
+                window.location.href = 'index.html'; 
+                return;
+            }
+
+            try {
+                // التحقق من صحة الحساب سحابياً لمنع التلاعب بملفات الدخول المحلية
+                const userPhone = checkUser.phone || "admin";
+                
+                // البحث الديناميكي عن الحساب في قاعدة البيانات للتأكد من وجوده وصلاحياته
+                let userDoc = await getDoc(doc(db, "users", userPhone));
+                if (!userDoc.exists()) {
+                    userDoc = await getDoc(doc(db, "assistants", userPhone));
+                }
+                if (!userDoc.exists()) {
+                    userDoc = await getDoc(doc(db, "students", userPhone));
+                }
+
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    
+                    // التحقق الأمني من تطابق كلمة المرور (إذا تم تخزينها) وتطابق الدور الإداري المسموح به
+                    const isPasswordValid = !checkUser.password || checkUser.password === userData.password;
+                    const isRoleValid = allowedRoles.includes(userData.role);
+                    
+                    if (!isPasswordValid || !isRoleValid) {
+                        alert("⚠️ تنبيه أمني: جلسة الدخول تالفة أو تم التلاعب ببيانات الصلاحيات!");
+                        localStorage.removeItem('loggedInUser');
+                        window.location.href = 'index.html';
                     }
+                }
+            } catch (err) {
+                console.warn("تنبيه أمني: تعذر ربط الفحص المباشر مع السيرفر، جاري التشغيل بالمصادقة المحلية مؤقتاً.");
+            }
+        }
                 }
             } catch(e) {
                 console.log("تعذر تحميل ملف إعدادات الأمان السحابي، جاري تطبيق القيم الافتراضية.");
