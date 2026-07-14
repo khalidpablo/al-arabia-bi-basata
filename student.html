@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>بوابة البطل | العربية ببساطة</title>
     
-    <!-- 🛡️ حارس البوابة الفوري -->
     <script>
         const checkUser = localStorage.getItem('loggedInUser');
         if (!checkUser || checkUser === 'admin') { window.location.href = 'index.html'; }
@@ -30,101 +29,83 @@
             }
         }
     </script>
-    
     <style>
         body { font-family: 'Cairo', sans-serif; background-color: #0b162c; overflow-x: hidden; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         .animate-float { animation: float 3s ease-in-out infinite; }
         .gold-glow { transition: all 0.4s ease; }
         .gold-glow:hover { box-shadow: 0 0 20px rgba(212, 175, 55, 0.25); border-color: rgba(212, 175, 55, 0.5); transform: translateY(-2px); }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0b162c; }
-        ::-webkit-scrollbar-thumb { background: #112244; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.2); }
     </style>
 </head>
 <body class="text-slate-100 min-h-screen pb-12 bg-gradient-to-b from-[#0b162c] via-[#0f1f3d] to-[#0b162c]">
 
     <div class="max-w-7xl mx-auto p-4 md:p-6">
-        
         <header class="flex flex-col md:flex-row justify-between items-center mb-10 py-5 border-b border-logoGold/20 gap-4">
             <div class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-logoGold shadow-lg shadow-logoGold/20 bg-logoDark relative transform hover:rotate-6 transition duration-300">
+                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-logoGold bg-logoDark relative">
                     <img src="logo.png" alt="لوجو العربية ببساطة" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/150/0b162c/d4af37?text=ض'">
-                    <span class="absolute top-1 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-logoGold rounded-full shadow-md shadow-logoGold animate-ping"></span>
                 </div>
                 <div>
-                    <h1 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-logoGold tracking-wide" id="studentWelcomeTitle">لوحة البطل...</h1>
-                    <p class="text-xs text-slate-400 font-semibold tracking-widest mt-0.5">بَوَّابَةُ الأُسْتَاذ خَالِد التَّعْلِيمِيَّة الرَّسْمِيَّة</p>
+                    <h1 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-logoGold" id="studentWelcomeTitle">لوحة البطل...</h1>
+                    <p class="text-xs text-slate-400 font-semibold mt-0.5">بَوَّابَةُ الأُسْتَاذ خَالِد التَّعْلِيمِيَّة الرَّسْمِيَّة</p>
                 </div>
             </div>
-            <button onclick="logout()" class="px-5 py-2 border border-red-500/40 text-red-400 rounded-xl font-bold hover:bg-red-500 hover:text-white transition duration-300 text-sm">تسجيل الخروج</button>
+            <div class="flex items-center gap-2">
+                <button onclick="contactTeacher()" class="px-4 py-2 border border-[#25d366]/40 text-[#25d366] rounded-xl font-bold hover:bg-[#25d366] hover:text-logoDark transition text-xs flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-sm"></i> اسأل معلمي</button>
+                <button onclick="logout()" class="px-4 py-2 border border-red-500/40 text-red-400 rounded-xl font-bold hover:bg-red-500 hover:text-white transition text-xs">تسجيل الخروج</button>
+            </div>
         </header>
 
-        <!-- بنر الإعلانات -->
-        <div id="noticeboardBanner" class="hidden bg-gradient-to-r from-amber-600/20 to-logoNavy border border-logoGold/30 p-4 rounded-xl shadow-lg mb-8 items-center gap-3 animate-pulse">
+        <div id="noticeboardBanner" class="hidden bg-gradient-to-r from-amber-600/20 to-logoNavy border border-logoGold/30 p-4 rounded-xl shadow-lg mb-8 flex items-center gap-3 animate-pulse">
             <span class="text-2xl text-logoGold"><i class="fa-solid fa-bullhorn"></i></span>
-            <div class="flex-1">
-                <span class="text-xs font-bold text-logoGold block">توجيه هام من الأستاذ خالد:</span>
-                <p id="noticeTextContainer" class="text-xs text-white font-semibold mt-0.5">لا توجد إعلانات اليوم.</p>
-            </div>
+            <div><span class="text-xs font-bold text-logoGold block">توجيه هام من الأستاذ خالد:</span><p id="noticeTextContainer" class="text-xs text-white font-semibold mt-0.5">لا توجد إعلانات اليوم.</p></div>
         </div>
 
-        <!-- كرت الترحيب بالبطل -->
-        <div class="bg-gradient-to-r from-logoNavy via-[#162a54] to-logoNavy/40 border border-logoGold/20 p-6 rounded-2xl shadow-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden group">
+        <div class="bg-gradient-to-r from-logoNavy via-[#162a54] to-logoNavy/40 border border-logoGold/20 p-6 rounded-2xl shadow-2xl mb-8 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
             <div class="flex flex-col md:flex-row items-center gap-5 z-10 w-full md:w-auto">
                 <div class="bg-logoDark h-20 w-20 rounded-2xl border border-logoGold/30 flex items-center justify-center text-4xl shadow-xl animate-float">🏆</div>
                 <div class="text-center md:text-right">
                     <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-logoGold to-white mb-1" id="heroCardName">جاري التحميل...</h2>
                     <p class="text-xs text-slate-300 font-medium">بطل متميز في لغة الضاد ومستعد للتحدي دائمًا ✨</p>
-                    <button onclick="toggleProfileCard()" class="mt-3 bg-logoDark text-logoGold border border-logoGold/30 text-[11px] font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 mx-auto md:mx-0">
-                        <i class="fa-solid fa-address-card"></i> <span id="toggleBtnText">عرض بطاقة البطل الرقمية 🪪</span>
-                    </button>
+                    <button onclick="toggleProfileCard()" class="mt-3 bg-logoDark text-logoGold border border-logoGold/30 text-[11px] font-bold px-3 py-1.5 rounded-xl"><span id="toggleBtnText">عرض بطاقة البطل الرقمية 🪪</span></button>
                 </div>
             </div>
             <div class="bg-logoDark/90 px-8 py-4 rounded-2xl border-2 border-logoGold/30 text-center min-w-[160px] z-10">
                 <div class="text-[11px] text-slate-400 font-bold uppercase tracking-wider mb-1">الرصيد الكلي للنقاط</div>
-                <div class="text-3xl font-black text-logoGold tracking-wide" id="studentScoreText">0 نقطة</div>
+                <div class="text-3xl font-black text-logoGold" id="studentScoreText">0 نقطة</div>
             </div>
         </div>
 
-        <!-- البطاقة الذكية التفاعلية للملف الشخصي -->
         <div id="interactiveProfileCard" class="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out mb-0">
             <div class="bg-gradient-to-b from-[#112244] to-[#0b162c] border-2 border-logoGold/40 rounded-3xl p-6 mb-8 max-w-md mx-auto text-center relative shadow-2xl">
-                <div class="w-28 h-28 mx-auto rounded-full bg-logoDark border-4 border-logoGold p-1 shadow-xl mb-4">
-                    <img id="studentAvatarImg" src="" alt="صورة البطل" class="w-full h-full rounded-full object-cover">
-                </div>
+                <div class="w-24 h-24 mx-auto rounded-full bg-logoDark border-4 border-logoGold p-1 mb-4"><img id="studentAvatarImg" src="" alt="صورة البطل" class="w-full h-full rounded-full object-cover"></div>
                 <h3 id="profileCardTitleName" class="text-lg font-bold text-white">فارس الضاد</h3>
                 <p id="profileCardPhone" class="text-xs text-logoGold font-medium mt-1">رقم الحساب: 0000</p>
                 <div class="mt-4 pt-3 border-t border-slate-700/50 grid grid-cols-2 gap-2 text-right text-xs text-slate-300">
-                    <div>🟢 الحالة: <span class="text-green-400 font-bold">نشط حالياً</span></div>
-                    <div id="profileCardGrade">🎓 الصف: <span>جاري التحميل...</span></div>
+                    <div>🟢 الحالة: <span class="text-green-400 font-bold">نشط حالياً</span></div><div id="profileCardGrade">🎓 الصف: <span>جاري التحميل...</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- الأقسام والمحتوى -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div class="lg:col-span-4 space-y-6">
-                <!-- المتصدرين الخمسة الأوائل -->
                 <div class="bg-logoNavy border border-logoGold/10 p-5 rounded-2xl shadow-xl gold-glow">
-                    <h2 class="text-lg font-bold text-logoGold mb-4 flex items-center gap-2"><i class="fa-solid fa-crown text-logoGold animate-bounce"></i> لوحة الأبطال الخمسة الأوائل</h2>
-                    <div id="leaderboardList" class="space-y-3"><p class="text-center py-4 text-xs text-slate-500">جاري الحساب...</p></div>
+                    <h2 class="text-lg font-bold text-logoGold mb-4 flex items-center gap-2">🥇 لوحة الأبطال الخمسة الأوائل</h2>
+                    <div id="leaderboardList" class="space-y-3"></div>
                 </div>
-                <!-- التقييمات والاختبارات المخصصة للمرحلة -->
                 <div class="bg-logoNavy border border-logoGold/10 p-5 rounded-2xl shadow-xl gold-glow">
-                    <h2 class="text-lg font-bold text-logoGold mb-4 flex items-center gap-2"><i class="fa-solid fa-award text-logoGold"></i> الاختبارات والتقييمات التفاعلية</h2>
-                    <div id="quizzesContainer" class="space-y-3"><p class="text-center py-4 text-xs text-slate-500">جاري التجهيز...</p></div>
+                    <h2 class="text-lg font-bold text-logoGold mb-4 flex items-center gap-2">📝 تحديات واختبارات صفي الدراسي</h2>
+                    <div id="quizzesContainer" class="space-y-3"></div>
                 </div>
             </div>
 
-            <!-- مكتبة الشروحات والملفات المخصصة لصف الطالب -->
             <div class="lg:col-span-8 space-y-8">
                 <div class="bg-logoNavy border border-logoGold/10 p-6 rounded-2xl shadow-xl gold-glow">
-                    <h2 class="text-xl font-bold text-logoGold mb-4 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-logoGold"></i> مكتبة أوراق العمل وفيديوهات الشرح</h2>
+                    <h2 class="text-xl font-bold text-logoGold mb-4 flex items-center gap-2">📚 مكتبة أوراق العمل وفيديوهات صفّي</h2>
                     <div class="flex flex-wrap gap-2 mb-6 border-b border-logoGold/10 pb-4">
-                        <button onclick="setLessonFilter('all')" id="filter-all" class="px-4 py-2 bg-logoGold text-logoDark text-xs font-bold rounded-xl transition shadow-md">الكل 📚</button>
-                        <button onclick="setLessonFilter('video')" id="filter-video" class="px-4 py-2 bg-logoDark text-slate-300 border border-logoGold/20 text-xs font-bold rounded-xl transition hover:border-logoGold">فيديوهات الشرح 🎬</button>
-                        <button onclick="setLessonFilter('pdf')" id="filter-pdf" class="px-4 py-2 bg-logoDark text-slate-300 border border-logoGold/20 text-xs font-bold rounded-xl transition hover:border-logoGold">أوراق العمل PDF 📄</button>
+                        <button onclick="setLessonFilter('all')" id="filter-all" class="px-4 py-2 bg-logoGold text-logoDark text-xs font-bold rounded-xl shadow-md">الكل 📚</button>
+                        <button onclick="setLessonFilter('video')" id="filter-video" class="px-4 py-2 bg-logoDark text-slate-300 border border-logoGold/20 text-xs font-bold rounded-xl hover:border-logoGold">فيديوهات الشرح 🎬</button>
+                        <button onclick="setLessonFilter('pdf')" id="filter-pdf" class="px-4 py-2 bg-logoDark text-slate-300 border border-logoGold/20 text-xs font-bold rounded-xl hover:border-logoGold">أوراق العمل PDF 📄</button>
                     </div>
                     <div id="lessonsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
                 </div>
@@ -132,29 +113,22 @@
         </div>
     </div>
 
-    <!-- نافذة منبثقة لحل الاختبار تفاعلياً -->
     <div id="quizModal" class="fixed inset-0 bg-logoDark/95 backdrop-blur-md hidden items-center justify-center p-4 z-50">
-        <div class="bg-logoNavy border-2 border-logoGold/40 p-6 md:p-8 rounded-3xl max-w-lg w-full shadow-2xl relative transform transition-all duration-300">
-            <button onclick="closeQuizModal()" class="absolute top-4 left-4 text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+        <div class="bg-logoNavy border-2 border-logoGold/40 p-6 md:p-8 rounded-3xl max-w-lg w-full relative">
+            <button onclick="closeQuizModal()" class="absolute top-4 left-4 text-slate-400 text-xl"><i class="fa-solid fa-xmark"></i></button>
             <div class="flex justify-between items-center mb-4 mt-2">
                 <span class="text-xs text-logoGold bg-logoGold/10 border border-logoGold/20 px-3 py-1 rounded-full font-bold" id="modalQuizTitle">الاختبار</span>
                 <span class="text-xs text-amber-400 font-bold" id="modalQuizProgress">السؤال 1</span>
             </div>
             <h3 class="text-lg md:text-xl font-bold text-slate-100 mb-6" id="modalQuestionText">السؤال؟</h3>
             <div class="space-y-3" id="modalOptionsContainer"></div>
-            <button id="submitQuizAnswerBtn" class="w-full mt-6 bg-logoGold hover:bg-logoGoldHover text-logoDark font-extrabold py-3.5 rounded-xl transition flex items-center justify-center gap-2">
-                <span id="quizSubmitBtnText">التالي</span> <i class="fa-solid fa-arrow-left"></i>
-            </button>
+            <button id="submitQuizAnswerBtn" class="w-full mt-6 bg-logoGold text-logoDark font-extrabold py-3.5 rounded-xl flex items-center justify-center gap-2"><span id="quizSubmitBtnText">التالي</span></button>
         </div>
     </div>
 
-    <!-- زر واتساب العائم لمراسلة الأستاذ خالد -->
-    <button onclick="contactTeacher()" class="group fixed bottom-6 left-6 bg-[#25D366] hover:bg-[#20ba5a] text-white h-14 w-14 rounded-full shadow-2xl flex items-center justify-center text-2xl z-50 transition transform hover:scale-110">
-        <i class="fa-brands fa-whatsapp animate-pulse"></i>
-    </button>
-
-    <div id="customToast" class="fixed bottom-6 right-6 bg-logoNavy border-2 border-logoGold px-6 py-4 rounded-xl shadow-2xl z-50 translate-y-20 opacity-0 transition-all duration-500 max-w-sm">
-        <div class="flex items-center gap-3"><span id="toastIcon" class="text-2xl">🎉</span><div><h4 id="toastTitle" class="font-bold text-logoGold">إشعار</h4><p id="toastMessage" class="text-slate-200 text-xs mt-1"></p></div></div>
+    <div id="toastNotification" class="fixed bottom-5 left-5 bg-logoNavy border-2 border-logoGold text-white p-4 rounded-2xl shadow-2xl z-50 transform translate-y-24 opacity-0 transition-all duration-300 max-w-sm flex items-center gap-3">
+        <div class="text-2xl" id="toastIcon">✨</div>
+        <div><h4 class="font-bold text-xs text-logoGold" id="toastTitle">تنبيه!</h4><p class="text-[11px] text-slate-300 mt-0.5" id="toastMessage"></p></div>
     </div>
 
     <script type="module">
@@ -174,82 +148,98 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        const loggedInUserStr = localStorage.getItem('loggedInUser');
-        const loggedInUser = loggedInUserStr ? JSON.parse(loggedInUserStr) : {};
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
         const studentPhone = loggedInUser.phone;
         
         let currentStudentData = null;
-        let activeQuizId = null; let activeQuizData = null; let quizQuestionsList = [];
-        let currentQuestionIndex = 0; let selectedOptionIndex = null; let correctAnswersCount = 0;
-        let isFeedbackPhase = false; let localLessonsArray = []; let currentLessonFilter = 'all';
+        let activeQuizId = null; 
+        let quizQuestionsList = [];
+        let currentQuestionIndex = 0; 
+        let selectedOptionIndex = null; 
+        let correctAnswersCount = 0;
+        let isFeedbackPhase = false; 
+        let localLessonsArray = []; 
+        let currentLessonFilter = 'all';
+        let activeQuizzesMap = {}; // خريطة برمجية لحفظ بيانات الاختبارات لتفادي مشاكل الرموز وعلامات التنصيص
 
-        // قاموس ترجمة الأكواد لبطاقة ملف الطالب التعريفي
         const gradesMapping = {
-            "1pri": "الأول الابتدائي", "2pri": "الثاني الابتدائي", "3pri": "الثالث الابتدائي",
             "4pri": "الرابع الابتدائي", "5pri": "الخامس الابتدائي", "6pri": "السادس الابتدائي",
-            "1prep": "الأول الإعدادي", "2prep": "الثاني الإعدادي", "3prep": "الثالث الإعدادي",
+            "1prep": "الأول الإعدادي", "2prep": "الصف الثاني الإعدادي", "3prep": "الثالث الإعدادي",
             "1sec": "الأول الثانوي", "2sec": "الثاني الثانوي", "3sec": "الثالث الثانوي"
+        };
+
+        // معالج ذكي لتحويل أي رابط يوتيوب لرابط تضمين متوافق مع الآيفون والأندرويد
+        function getYouTubeEmbedUrl(url) {
+            if (!url) return '';
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            if (match && match[2].length === 11) {
+                return `https://www.youtube.com/embed/${match[2]}`;
+            }
+            return url;
+        }
+
+        window.showToast = (title, message, icon = "✨") => {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastTitle').innerText = title;
+            document.getElementById('toastMessage').innerText = message;
+            document.getElementById('toastIcon').innerText = icon;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 4000);
         };
 
         let isCardVisible = false;
         window.toggleProfileCard = () => {
             const card = document.getElementById('interactiveProfileCard');
             const btnText = document.getElementById('toggleBtnText');
-            if (!isCardVisible) {
-                card.style.maxHeight = "500px"; card.style.opacity = "1"; card.style.marginBottom = "2rem";
-                btnText.innerText = "إخفاء بطاقة البطل الرقمية ❌"; isCardVisible = true;
-            } else {
-                card.style.maxHeight = "0"; card.style.opacity = "0"; card.style.marginBottom = "0";
-                btnText.innerText = "عرض بطاقة البطل الرقمية 🪪"; isCardVisible = false;
-            }
-        };
-
-        window.showToast = (title, message, icon = '🎉') => {
-            const toast = document.getElementById('customToast');
-            document.getElementById('toastTitle').innerText = title; document.getElementById('toastMessage').innerText = message; document.getElementById('toastIcon').innerText = icon;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 4500);
+            isCardVisible = !isCardVisible;
+            card.style.maxHeight = isCardVisible ? "500px" : "0";
+            card.style.opacity = isCardVisible ? "1" : "0";
+            card.style.marginBottom = isCardVisible ? "2rem" : "0";
+            btnText.innerText = isCardVisible ? "إخفاء بطاقة البطل الرقمية ❌" : "عرض بطاقة البطل الرقمية 🪪";
         };
 
         async function updateOnlineStatus(status) {
-            if (studentPhone) { try { await updateDoc(doc(db, "students", studentPhone), { isOnline: status }); } catch (e) {} }
+            if (studentPhone && currentStudentData) {
+                try { await updateDoc(doc(db, "students", studentPhone), { isOnline: status }); } catch(e){}
+            }
         }
 
         if (studentPhone) {
             onSnapshot(doc(db, "students", studentPhone), (docSnap) => {
                 if (docSnap.exists()) {
                     currentStudentData = docSnap.data();
-                    const hour = new Date().getHours();
-                    let greeting = hour < 12 ? "صباح الخير والهمة" : "مساء النور والتميز";
-                    
-                    document.getElementById('studentWelcomeTitle').innerText = `${greeting} يا بطل، ${currentStudentData.name} ✨`;
+                    document.getElementById('studentWelcomeTitle').innerText = `أهلاً بك يا بطل، ${currentStudentData.name} ✨`;
                     document.getElementById('heroCardName').innerText = currentStudentData.name;
                     document.getElementById('studentScoreText').innerText = `${currentStudentData.score || 0} نقطة`;
-                    
-                    let gradeText = gradesMapping[currentStudentData.grade] || "محتوى عام";
-                    document.getElementById('profileCardGrade').innerHTML = `🎓 الصف: <span class="text-white font-bold">${gradeText}</span>`;
+                    document.getElementById('profileCardGrade').innerHTML = `🎓 الصف: <span class="text-white font-bold">${gradesMapping[currentStudentData.grade] || "غير محدد"}</span>`;
                     document.getElementById('profileCardTitleName').innerText = currentStudentData.name;
                     document.getElementById('profileCardPhone').innerText = `رقم الحساب: ${studentPhone}`;
                     document.getElementById('studentAvatarImg').src = `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(currentStudentData.name)}&backgroundColor=112244,0b162c&radius=50`;
-                    
                     renderLessonsList();
-                } else { logout(); }
+                } else { 
+                    // إذا قام المعلم بحذف الطالب أثناء تصفحه للموقع، يتم تسجيل خروجه تلقائياً بشكل آمن
+                    currentStudentData = null;
+                    logout(); 
+                }
             });
         }
 
-        updateOnlineStatus(true);
-
+        // جلب قائمة الأبطال الخمسة الأوائل (لوحة الصدارة) مع تصفية حساب الأدمن
         onSnapshot(collection(db, "students"), (snapshot) => {
             const list = document.getElementById('leaderboardList'); list.innerHTML = "";
-            let arr = []; snapshot.forEach(d => arr.push({ name: d.data().name, score: d.data().score || 0 }));
+            let arr = []; 
+            snapshot.forEach(d => {
+                const data = d.data();
+                // استبعاد الأدمن وحساب المعلم تلقائياً من قائمة المتصدرين
+                if (data.name && d.id !== 'admin' && data.role !== 'admin' && data.name !== 'الأدمن') {
+                    arr.push({ name: data.name, score: data.score || 0 });
+                }
+            });
             arr.sort((a,b)=>b.score-a.score);
             arr.slice(0,5).forEach((st, idx) => {
                 let medal = idx===0?"🥇":idx===1?"🥈":idx===2?"🥉":"✨";
-                list.innerHTML += `
-                    <div class="flex items-center justify-between p-3 bg-logoDark/60 border border-logoGold/10 rounded-xl">
-                        <div class="flex items-center gap-2"><span>${medal}</span><span class="text-xs font-bold text-slate-200">${st.name}</span></div>
-                        <span class="text-xs font-black text-logoGold">${st.score} ن</span>
-                    </div>`;
+                list.innerHTML += `<div class="flex items-center justify-between p-3 bg-logoDark/60 border border-logoGold/10 rounded-xl"><span class="text-xs font-bold text-slate-200">${medal} ${st.name}</span><span class="text-xs font-black text-logoGold">${st.score} ن</span></div>`;
             });
         });
 
@@ -264,27 +254,24 @@
         function renderLessonsList() {
             const grid = document.getElementById('lessonsGrid'); grid.innerHTML = "";
             const filtered = localLessonsArray.filter(l => {
-                if (currentStudentData && l.grade && l.grade !== currentStudentData.grade) return false;
+                // فلترة المحتوى حسب الصف وحسب رغبة المعلم (إذا كان الدرس للكل أو للصف الحالي للطالب)
+                if (currentStudentData && l.grade && l.grade !== 'all' && l.grade !== currentStudentData.grade) return false;
                 if (currentLessonFilter === 'all') return true;
-                const isPdf = l.type === 'pdf' || (l.url && l.url.includes('.pdf'));
-                return currentLessonFilter === 'pdf' ? isPdf : !isPdf;
+                return l.type === currentLessonFilter;
             });
 
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-2 text-center py-12 text-slate-500 text-xs"><p>لا توجد دروس مرفوعة لصفك الدراسي حالياً في هذا القسم.</p></div>`; return;
-            }
+            if (filtered.length === 0) { grid.innerHTML = `<div class="col-span-2 text-center py-12 text-slate-500 text-xs"><p>لا توجد ملفات مرفوعة لصفك الدراسي حالياً.</p></div>`; return; }
 
             filtered.forEach(lesson => {
-                let isPdf = lesson.type === 'pdf' || (lesson.url && lesson.url.includes('.pdf'));
-                grid.innerHTML += isPdf ? `
-                    <div class="p-4 bg-logoDark border border-logoGold/20 rounded-xl flex flex-col justify-between h-44 shadow-md">
-                        <div class="flex items-start gap-3"><span class="text-3xl text-red-500"><i class="fa-solid fa-file-pdf"></i></span>
-                        <div><h4 class="font-bold text-xs text-slate-100 line-clamp-2">${lesson.title}</h4></div></div>
-                        <a href="${lesson.url}" target="_blank" class="w-full bg-logoNavy text-logoGold text-center text-xs font-bold py-2 rounded-lg hover:bg-logoGold hover:text-logoDark transition">قراءة وتنزيل المذكرة</a>
+                if (!lesson.url) return;
+                grid.innerHTML += lesson.type === 'pdf' ? `
+                    <div class="p-4 bg-logoDark border border-logoGold/20 rounded-xl flex flex-col justify-between h-40 shadow-md">
+                        <h4 class="font-bold text-xs text-slate-100 line-clamp-2"><i class="fa-solid fa-file-pdf text-red-400 ml-1"></i> ${lesson.title || 'درس تعليمي'}</h4>
+                        <a href="${lesson.url}" target="_blank" class="w-full bg-logoNavy text-logoGold text-center text-xs font-bold py-2 rounded-lg hover:bg-logoGold hover:text-logoDark transition">عرض وتنزيل الملف الدراسي</a>
                     </div>` : `
                     <div class="bg-logoDark border border-logoGold/20 rounded-xl overflow-hidden shadow-md">
-                        <div class="aspect-video"><video controls class="w-full h-full object-cover"><source src="${lesson.url}" type="video/mp4"></video></div>
-                        <div class="p-3"><h4 class="font-bold text-xs text-slate-100">${lesson.title}</h4></div>
+                        <div class="aspect-video"><iframe src="${getYouTubeEmbedUrl(lesson.url)}" class="w-full h-full" frameborder="0" allowfullscreen></iframe></div>
+                        <div class="p-3"><h4 class="font-bold text-xs text-slate-100">${lesson.title || 'شرح فيديو'}</h4></div>
                     </div>`;
             });
         }
@@ -296,22 +283,24 @@
             let counter = 0;
             snapshot.forEach(docSnap => {
                 const quiz = docSnap.data(); const quizId = docSnap.id;
-                if (currentStudentData && quiz.grade && quiz.grade !== currentStudentData.grade) return;
+                if (currentStudentData && quiz.grade && quiz.grade !== 'all' && quiz.grade !== currentStudentData.grade) return;
                 counter++;
+                activeQuizzesMap[quizId] = quiz; // تخزين آمن لبيانات الاختبار
                 const isSolved = (currentStudentData?.completedQuizzes || []).includes(quizId);
-                let btn = isSolved ? `<button disabled class="w-full py-2 bg-emerald-950/20 text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-bold">✓ تم الحل</button>` : `
-                    <button onclick="startQuiz('${quizId}', ${JSON.stringify(quiz).replace(/"/g, '&quot;')})" class="w-full py-2 bg-logoGold text-logoDark font-extrabold rounded-lg text-xs hover:bg-logoGoldHover transition">ابدأ التحدي البطل 🚀</button>`;
-                list.innerHTML += `<div class="bg-logoDark/60 border border-logoGold/15 p-4 rounded-xl space-y-3"><div><h4 class="font-bold text-xs text-white">${quiz.title}</h4></div>${btn}</div>`;
+                let btn = isSolved ? `<button disabled class="w-full py-2 bg-emerald-950/20 text-emerald-400 border border-emerald-500/20 rounded-lg text-xs font-bold">✓ تم إنجاز التحدي</button>` : `
+                    <button onclick="startQuiz('${quizId}')" class="w-full py-2 bg-logoGold text-logoDark font-extrabold rounded-lg text-xs hover:bg-logoGoldHover transition">ابدأ الاختبار الآن 🚀</button>`;
+                list.innerHTML += `<div class="bg-logoDark/60 border border-logoGold/15 p-4 rounded-xl space-y-2"><div><h4 class="font-bold text-xs text-white">${quiz.title || 'اختبار صفي'}</h4></div>${btn}</div>`;
             });
-            if(counter===0) list.innerHTML = `<p class="text-center text-xs text-slate-500 py-4">لا توجد اختبارات متاحة لصفك حالياً.</p>`;
+            if(counter===0) list.innerHTML = `<p class="text-center text-xs text-slate-500 py-4">لا توجد اختبارات مجدولة لصفك حالياً.</p>`;
         });
 
-        window.startQuiz = (id, data) => {
-            activeQuizId = id; activeQuizData = data; isFeedbackPhase = false;
-            quizQuestionsList = data.questions || [{ question: data.question, options: data.options, correctIndex: data.correctIndex }];
+        window.startQuiz = (id) => {
+            const quiz = activeQuizzesMap[id];
+            if (!quiz) return;
+            activeQuizId = id; isFeedbackPhase = false; quizQuestionsList = quiz.questions || [];
             currentQuestionIndex = 0; correctAnswersCount = 0; selectedOptionIndex = null;
-            document.getElementById('modalQuizTitle').innerText = data.title; loadQuestionStep();
-            const modal = document.getElementById('quizModal'); modal.classList.remove('hidden'); modal.classList.add('flex');
+            document.getElementById('modalQuizTitle').innerText = quiz.title || 'الاختبار'; loadQuestionStep();
+            document.getElementById('quizModal').classList.remove('hidden'); document.getElementById('quizModal').classList.add('flex');
         };
 
         function loadQuestionStep() {
@@ -319,12 +308,13 @@
             const q = quizQuestionsList[currentQuestionIndex];
             document.getElementById('modalQuizProgress').innerText = `السؤال ${currentQuestionIndex+1} من ${quizQuestionsList.length}`;
             document.getElementById('modalQuestionText').innerText = q.question;
-            document.getElementById('quizSubmitBtnText').innerText = currentQuestionIndex === quizQuestionsList.length - 1 ? "إنهاء الاختبار" : "السؤال التالي";
+            document.getElementById('quizSubmitBtnText').innerText = currentQuestionIndex === quizQuestionsList.length - 1 ? "إنهاء التحدي واعتماد النتيجة" : "تأكيد والذهاب للسؤال التالي";
             
             const container = document.getElementById('modalOptionsContainer'); container.innerHTML = "";
             q.options.forEach((opt, idx) => {
+                if(!opt) return;
                 container.innerHTML += `
-                    <button onclick="selectQuizOption(${idx})" id="opt-btn-${idx}" class="w-full text-right p-3.5 bg-logoDark border border-logoGold/20 rounded-xl text-xs flex justify-between items-center text-slate-200">
+                    <button onclick="selectQuizOption(${idx})" id="opt-btn-${idx}" class="w-full text-right p-3 bg-logoDark border border-logoGold/20 rounded-xl text-xs flex justify-between items-center text-slate-200">
                         <span>${opt}</span><span class="h-4 w-4 rounded-full border border-slate-600" id="indicator-${idx}"></span>
                     </button>`;
             });
@@ -333,24 +323,24 @@
         window.selectQuizOption = (idx) => {
             if (isFeedbackPhase) return;
             if (selectedOptionIndex !== null) {
-                document.getElementById(`opt-btn-${selectedOptionIndex}`).className = "w-full text-right p-3.5 bg-logoDark border border-logoGold/20 rounded-xl text-xs flex justify-between items-center text-slate-200";
-                document.getElementById(`indicator-${selectedOptionIndex}`).className = "h-4 w-4 rounded-full border border-slate-600";
-                document.getElementById(`indicator-${selectedOptionIndex}`).innerText = "";
+                document.getElementById(`opt-btn-${selectedOptionIndex}`).className = "w-full text-right p-3 bg-logoDark border border-logoGold/20 rounded-xl text-xs flex justify-between items-center text-slate-200";
             }
             selectedOptionIndex = idx;
-            document.getElementById(`opt-btn-${idx}`).className = "w-full text-right p-3.5 bg-logoNavy border-2 border-logoGold rounded-xl text-xs flex justify-between items-center text-white font-bold";
-            document.getElementById(`indicator-${idx}`).className = "h-4 w-4 rounded-full bg-logoGold flex items-center justify-center text-[10px] text-logoDark font-bold";
-            document.getElementById(`indicator-${idx}`).innerText = "✓";
+            document.getElementById(`opt-btn-${idx}`).className = "w-full text-right p-3 bg-logoNavy border-2 border-logoGold rounded-xl text-xs flex justify-between items-center text-white font-bold";
         };
 
         document.getElementById('submitQuizAnswerBtn').addEventListener('click', async () => {
-            if (isFeedbackPhase || selectedOptionIndex === null) return;
+            if (isFeedbackPhase) return;
+            if (selectedOptionIndex === null) {
+                window.showToast("تنبيه!", "الرجاء اختيار إجابة أولاً للتأكيد! ⚠️", "💡");
+                return;
+            }
             isFeedbackPhase = true;
             const q = quizQuestionsList[currentQuestionIndex]; const correct = q.correctIndex;
 
-            document.getElementById(`opt-btn-${correct}`).className = "w-full text-right p-3.5 bg-emerald-600 text-white border-2 border-emerald-400 rounded-xl text-xs flex justify-between items-center font-bold";
+            document.getElementById(`opt-btn-${correct}`).className = "w-full text-right p-3 bg-emerald-600 text-white border-2 border-emerald-400 rounded-xl text-xs flex justify-between items-center font-bold";
             if (selectedOptionIndex !== correct) {
-                document.getElementById(`opt-btn-${selectedOptionIndex}`).className = "w-full text-right p-3.5 bg-rose-600 text-white border-2 border-rose-400 rounded-xl text-xs flex justify-between items-center font-bold";
+                document.getElementById(`opt-btn-${selectedOptionIndex}`).className = "w-full text-right p-3 bg-rose-600 text-white border-2 border-rose-400 rounded-xl text-xs flex justify-between items-center font-bold";
             } else { correctAnswersCount++; }
 
             setTimeout(async () => {
@@ -359,24 +349,37 @@
                 } else {
                     const points = correctAnswersCount * 10;
                     const comp = currentStudentData.completedQuizzes || []; comp.push(activeQuizId);
-                    await updateDoc(doc(db, "students", studentPhone), { score: (currentStudentData.score||0)+points, completedQuizzes: comp });
-                    closeQuizModal();
-                    if(points > 0) { confetti({ particleCount: 100, spread: 60 }); }
-                    window.showToast("تم إكمال التحدي!", `حصلت على ${points} نقطة جديدة مضافة لرصيدك!🏆`);
+                    try {
+                        await updateDoc(doc(db, "students", studentPhone), { score: (currentStudentData.score||0)+points, completedQuizzes: comp });
+                        closeQuizModal();
+                        if(points > 0) { confetti({ particleCount: 100, spread: 60 }); }
+                        window.showToast("تم إكمال التحدي!", `حصلت على ${points} نقطة جديدة مضافة لرصيدك!🏆`);
+                    } catch(error) {
+                        window.showToast("عذراً!", "حدثت مشكلة غير متوقعة أثناء الاتصال بالسيرفر لحفظ النقاط.", "⚠️");
+                    }
                 }
             }, 1500);
         });
 
         window.closeQuizModal = () => { document.getElementById('quizModal').classList.add('hidden'); };
         window.contactTeacher = () => { window.open(`https://wa.me/201021463131?text=${encodeURIComponent("أهلاً أستاذي خالد، أنا البطل: " + (currentStudentData?.name||"") + "، لدي سؤال بخصوص المنصة...")}`, '_blank'); };
-        window.logout = async () => { await updateOnlineStatus(false); localStorage.removeItem('loggedInUser'); window.location.href = 'index.html'; };
+        window.logout = async () => { 
+            if (currentStudentData) { await updateOnlineStatus(false); }
+            localStorage.removeItem('loggedInUser'); 
+            window.location.href = 'index.html'; 
+        };
         window.addEventListener('beforeunload', () => updateOnlineStatus(false));
 
         const notiQuery = query(collection(db, "notifications"), orderBy("createdAt", "desc"), limit(1));
         onSnapshot(notiQuery, (snap) => {
+            if (snap.empty) {
+                document.getElementById('noticeboardBanner').classList.add('hidden');
+                return;
+            }
             snap.forEach(doc => {
-                const n = doc.data(); document.getElementById('noticeboardBanner').classList.remove('hidden');
-                document.getElementById('noticeTextContainer').innerHTML = `<strong>${n.title}:</strong> ${n.body}`;
+                const n = doc.data(); 
+                document.getElementById('noticeboardBanner').classList.remove('hidden');
+                document.getElementById('noticeTextContainer').innerHTML = `<i class="fa-solid fa-bullhorn ml-2"></i> <strong>${n.title || 'تنبيه'}:</strong> ${n.body || ''}`;
             });
         });
     </script>

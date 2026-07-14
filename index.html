@@ -13,26 +13,19 @@
             theme: {
                 extend: {
                     colors: {
-                        logoDark: '#0b162c',    /* الكحلي الداكن من خلفية اللوجو */
-                        logoNavy: '#112244',    /* الكحلي المتوسط للكروت والإطارات */
-                        logoGold: '#d4af37',    /* الذهبي الملكي للأزرار والرموز */
-                        logoGoldHover: '#aa8c2c' /* ذهبي داكن عند تمرير الماوس */
+                        logoDark: '#0b162c',
+                        logoNavy: '#112244',
+                        logoGold: '#d4af37',
+                        logoGoldHover: '#aa8c2c'
                     }
                 }
             }
         }
     </script>
-    <head>
-    <title>تسجيل دخول | منصة العربية ببساطة التعليمية</title>
-
     <meta name="description" content="منصة تعليمية مبتكرة لتبسيط اللغة العربية للأطفال، تتبع نقاطك، وحل مهامك اليومية وتصدر لوحة الصدارة.">
-
     <meta name="keywords" content="اللغة العربية, العربية ببساطة, بوابة البطل, تعليم عربي, منصة تعليمية">
-    
     <meta name="language" content="Arabic">
     <meta name="author" content="الأستاذ خالد وحيد">
-    
-</head>
     
     <style>
         body {
@@ -40,134 +33,164 @@
             background-color: #0b162c;
             overflow-x: hidden;
         }
-        /* تأثير التوهج للحقول */
+        /* تأثيرات فاخرة مخصصة */
+        .gold-input {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         .gold-input:focus {
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
             border-color: #d4af37;
+            background-color: #112244;
+        }
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
         }
         .btn-glow:hover {
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
             transform: translateY(-2px);
         }
-        /* حركة الخلفية السينمائية المضيئة */
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: none;
+        }
+        .btn-glow:hover::after {
+            left: 120%;
+            transition: all 0.8s ease-in-out;
+        }
         @keyframes pulse-slow {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.1); }
+            0%, 100% { opacity: 0.25; transform: scale(1) translate(0, 0); }
+            50% { opacity: 0.5; transform: scale(1.15) translate(2%, 3%); }
         }
         .animate-pulse-slow {
-            animation: pulse-slow 8s ease-in-out infinite;
+            animation: pulse-slow 10s ease-in-out infinite;
         }
-        /* تنعيم حركة اللوجو المتفاعل مع الماوس */
         #interactiveLogoWrapper {
-            transition: transform 0.15s ease-out;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
             transform-style: preserve-3d;
-            perspective: 1000px;
+            perspective: 800px;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-stretch justify-center bg-[#0b162c]">
+<body class="min-h-screen flex items-stretch justify-center bg-[#0b162c] selection:bg-logoGold selection:text-logoDark">
 
     <div class="w-full min-h-screen flex flex-col md:flex-row-reverse items-stretch">
         
-        <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#112244] via-[#0b162c] to-[#172b54] relative overflow-hidden items-center justify-center p-12 border-l border-logoGold/10">
-            <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-logoGold/10 rounded-full blur-3xl animate-pulse-slow"></div>
-            <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 4s;"></div>
+        <!-- القسم الترويجي الجانبي (يظهر على الشاشات المتوسطة والكبيرة فقط) -->
+        <div class="hidden md:flex md:w-1/2 bg-gradient-to-br from-[#112244] via-[#0b162c] to-[#172b54] relative overflow-hidden items-center justify-center p-12 border-l border-logoGold/15">
+            <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-logoGold/10 rounded-full blur-[100px] animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] animate-pulse-slow" style="animation-delay: 5s;"></div>
             
             <div class="z-10 text-center space-y-6 max-w-lg">
-                <div class="inline-block px-4 py-1.5 bg-logoGold/10 border border-logoGold/30 rounded-full text-logoGold text-xs font-bold mb-2">
+                <div class="inline-block px-4 py-1.5 bg-logoGold/10 border border-logoGold/30 rounded-full text-logoGold text-xs font-bold mb-2 tracking-wide">
                     ✨ مستقبل تعليم اللغة العربية بين يديك
                 </div>
                 <h2 class="text-4xl lg:text-5xl font-black text-white leading-tight">
-                    منصة <span class="text-transparent bg-clip-text bg-gradient-to-r from-logoGold to-yellow-400">العَرَبِيَّةُ بِبَسَاطَة</span> التعليمية
+                    منصة <span class="text-transparent bg-clip-text bg-gradient-to-r from-logoGold to-yellow-400">عَرَبِيَّتِي ببَسَاطَة</span> التعليمية
                 </h2>
                 <p class="text-slate-300 text-sm leading-relaxed font-semibold">
                     رحلتك نحو الدرجة النهائية تبدأ من هنا. شروحات تفاعلية، اختبارات ذكية، ومتابعة دورية لحظة بلحظة مع فرسان الأستاذ خالد وحيد.
                 </p>
-                <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-700/50 text-right">
-                    <div>
+                <div class="pt-8 grid grid-cols-3 gap-4 border-t border-slate-700/40 text-right">
+                    <div class="bg-logoDark/40 p-3 rounded-xl border border-slate-700/30">
                         <h4 class="text-logoGold text-lg font-black">٠١</h4>
-                        <p class="text-slate-400 text-[11px] font-bold">شرح مبسط وذكي</p>
+                        <p class="text-slate-300 text-[11px] font-bold mt-1">شرح مبسط وذكي</p>
                     </div>
-                    <div>
+                    <div class="bg-logoDark/40 p-3 rounded-xl border border-slate-700/30">
                         <h4 class="text-logoGold text-lg font-black">٠٢</h4>
-                        <p class="text-slate-400 text-[11px] font-bold">اختبارات دورية</p>
+                        <p class="text-slate-300 text-[11px] font-bold mt-1">اختبارات دورية</p>
                     </div>
-                    <div>
+                    <div class="bg-logoDark/40 p-3 rounded-xl border border-slate-700/30">
                         <h4 class="text-logoGold text-lg font-black">٠٣</h4>
-                        <p class="text-slate-400 text-[11px] font-bold">دعم فني متواصل</p>
+                        <p class="text-slate-300 text-[11px] font-bold mt-1">دعم فني متواصل</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="absolute bottom-4 text-center text-[10px] text-slate-500 font-bold">
+            <div class="absolute bottom-4 text-center text-[10px] text-slate-500 font-bold tracking-wider">
                 جميع الحقوق محفوظة © ٢٠٢٦ لمنصة العربية ببساطة
             </div>
         </div>
 
-        <div class="w-full md:w-1/2 flex items-center justify-center p-6 sm:p-12 relative bg-gradient-to-b from-[#0b162c] via-[#0f1f3d] to-[#0b162c]">
-            
-            <div class="absolute top-10 left-10 w-72 h-72 bg-logoGold/5 rounded-full blur-3xl pointer-events-none md:hidden"></div>
+        <!-- قسم نموذج تسجيل الدخول المتجاوب بالكامل -->
+        <div class="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-8 lg:p-12 relative bg-gradient-to-b from-[#0b162c] via-[#0f1f3d] to-[#0b162c]">
+            <!-- تزيين خلفية الهواتف المحمولة -->
+            <div class="absolute top-10 left-10 w-64 h-64 bg-logoGold/5 rounded-full blur-[80px] pointer-events-none md:hidden"></div>
 
-            <div class="w-full max-w-md bg-logoNavy/60 backdrop-blur-xl border border-logoGold/20 p-8 rounded-3xl shadow-2xl shadow-black/50 z-10 transition-all duration-500 hover:border-logoGold/30">
-                
-                <div class="text-center mb-8 relative">
-                    <div id="interactiveLogoWrapper" class="w-20 h-20 mx-auto rounded-full bg-logoDark border-2 border-logoGold p-0.5 shadow-xl shadow-logoGold/10 flex items-center justify-center overflow-hidden">
-                        
-                        <img src="رابط_صورة_جوجل_درايف_المباشر_هنا" alt="لوجو العربية ببساطة" class="w-full h-full object-cover rounded-full select-none pointer-events-none" onerror="this.src='https://placehold.co/150/0b162c/d4af37?text=ض'">
-                    
+            <div class="w-full max-w-md bg-logoNavy/60 backdrop-blur-xl border border-logoGold/20 p-6 sm:p-8 rounded-3xl shadow-2xl shadow-black/80 z-10 transition-all duration-500 hover:border-logoGold/35">
+                <div class="text-center mb-6 relative">
+                    <!-- اللوجو التفاعلي ثلاثي الأبعاد -->
+                    <div id="interactiveLogoWrapper" class="w-24 h-24 mx-auto rounded-full bg-logoDark border-2 border-logoGold p-0.5 shadow-xl shadow-logoGold/20 flex items-center justify-center overflow-hidden cursor-pointer">
+                        <img src="logo.png" alt="لوجو العربية ببساطة" class="w-full h-full object-cover rounded-full select-none pointer-events-none" onerror="this.src='https://placehold.co/150/0b162c/d4af37?text=ض'">
                     </div>
-                    <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-logoGold to-white mt-4 tracking-wide md:hidden">
+                    <h1 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-logoGold to-white mt-4 tracking-wide md:hidden">
                         العَرَبِيَّةُ بِبَسَاطَة
                     </h1>
-                    <p class="text-sm text-slate-200 font-bold mt-3">مرحباً بك في منصة العربية ببساطة</p>
-                    <p class="text-xs text-slate-400 mt-1">سجل دخولك الآن للوصول إلى محاضراتك واختباراتك</p>
+                    <p class="text-sm text-slate-100 font-bold mt-4">مرحباً بك في منصة العربية ببساطة ✨</p>
+                    <p class="text-xs text-slate-400 mt-1">سجل دخولك الآن للوصول إلى اختباراتك وحصصك الممتعة</p>
                 </div>
 
-                <hr class="border-logoGold/10 my-4">
+                <hr class="border-logoGold/15 my-5">
 
+                <!-- حقول نموذج الدخول -->
                 <div class="space-y-4 text-right">
                     <div>
-                        <label class="block text-xs font-bold text-logoGold mb-1.5 mr-1"><i class="fa-solid fa-phone text-[10px] ml-1"></i> رقم الهاتف أو اسم المستخدم:</label>
+                        <label class="block text-xs font-bold text-logoGold mb-1.5 mr-1"><i class="fa-solid fa-user text-[10px] ml-1"></i> رقم الهاتف أو اسم المستخدم:</label>
                         <div class="relative">
-                            <span class="absolute right-3 top-3.5 text-slate-500"><i class="fa-solid fa-phone text-xs"></i></span>
-                            <input type="text" id="loginPhone" class="w-full p-3 pr-10 bg-logoDark border border-slate-700/80 text-white rounded-xl focus:outline-none gold-input transition text-left text-sm" placeholder="01xxxxxxxxx" dir="ltr">
+                            <span class="absolute right-3.5 top-3.5 text-slate-400"><i class="fa-solid fa-phone text-xs"></i></span>
+                            <input type="text" id="loginPhone" class="w-full p-3.5 pr-10 bg-logoDark/80 border border-slate-700/80 text-white rounded-xl focus:outline-none gold-input transition text-left text-sm font-semibold" placeholder="01xxxxxxxxx" dir="ltr">
                         </div>
                     </div>
                     
                     <div>
                         <label class="block text-xs font-bold text-logoGold mb-1.5 mr-1"><i class="fa-solid fa-lock text-[10px] ml-1"></i> كلمة المرور الشخصية:</label>
                         <div class="relative">
-                            <span class="absolute right-3 top-3.5 text-slate-500"><i class="fa-solid fa-lock text-xs"></i></span>
-                            <input type="password" id="loginPass" class="w-full p-3 pr-10 bg-logoDark border border-slate-700/80 text-white rounded-xl focus:outline-none gold-input transition text-left text-sm" placeholder="••••••••" dir="ltr">
+                            <span class="absolute right-3.5 top-3.5 text-slate-400"><i class="fa-solid fa-lock text-xs"></i></span>
+                            <input type="password" id="loginPass" class="w-full p-3.5 px-10 bg-logoDark/80 border border-slate-700/80 text-white rounded-xl focus:outline-none gold-input transition text-left text-sm" placeholder="••••••••" dir="ltr">
+                            <!-- زر إظهار وإخفاء كلمة المرور الفاخر -->
+                            <button type="button" onclick="togglePasswordVisibility()" class="absolute left-3 top-3.5 text-slate-400 hover:text-logoGold transition focus:outline-none">
+                                <i id="passwordToggleIcon" class="fa-solid fa-eye text-xs"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <button onclick="handleLogin()" id="loginBtn" class="w-full mt-6 bg-gradient-to-r from-logoGold to-logoGoldHover text-logoDark font-black py-3.5 rounded-xl transition-all duration-300 btn-glow transform active:scale-95 shadow-lg shadow-logoGold/10 flex justify-center items-center gap-2 text-sm">
-                    <span>دخول المنصة الآن</span> <i class="fa-solid fa-paper-plane text-xs"></i>
+                <!-- زر الإرسال مع تفعيل حركات فاخرة -->
+                <button onclick="handleLogin()" id="loginBtn" class="w-full mt-6 bg-gradient-to-r from-logoGold to-logoGoldHover text-logoDark font-black py-3.5 rounded-xl transition-all duration-300 btn-glow transform active:scale-[0.98] shadow-lg shadow-logoGold/15 flex justify-center items-center gap-2 text-sm cursor-pointer">
+                    <span id="btnText">دخول المنصة الآن</span>
+                    <span id="btnSpinner" class="hidden animate-spin rounded-full h-4 w-4 border-2 border-logoDark border-t-transparent"></span>
+                    <i id="btnIcon" class="fa-solid fa-paper-plane text-xs"></i>
                 </button>
 
-                <p id="errorMessage" class="text-red-400 text-xs font-bold transition-all duration-200 min-h-[1.25rem] text-center mt-3"></p>
+                <!-- مكان إشعارات الخطأ والتحقق الملونة -->
+                <p id="errorMessage" class="text-xs font-bold transition-all duration-200 min-h-[1.25rem] text-center mt-4 text-slate-400"></p>
 
-                <div class="mt-6 pt-4 border-t border-slate-700/50 text-center">
-                    <p class="text-[11px] text-slate-400 font-semibold mb-2.5">طالب جديد وتريد الانضمام لفرسان الأستاذ خالد؟</p>
-                    <a href="https://wa.me/201095300546" target="_blank" class="inline-flex items-center gap-2 bg-logoDark/80 hover:bg-logoDark border border-logoGold/20 hover:border-logoGold px-5 py-2 rounded-2xl transition duration-300 group shadow-md">
-                        <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+                <!-- قسم التواصل والانضمام للأستاذ خالد -->
+                <div class="mt-6 pt-5 border-t border-slate-700/40 text-center">
+                    <p class="text-[11px] text-slate-400 font-bold mb-3">هل أنت طالب جديد وتريد الانضمام لفرسان الضاد؟</p>
+                    <a href="https://wa.me/201095300546" target="_blank" class="inline-flex items-center gap-2 bg-logoDark/90 hover:bg-logoDark border border-logoGold/20 hover:border-logoGold px-5 py-2.5 rounded-2xl transition-all duration-300 group shadow-lg">
+                        <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-ping"></span>
                         <i class="fa-brands fa-whatsapp text-green-400 text-sm group-hover:scale-110 transition"></i>
-                        <span class="text-xs font-bold text-logoGold tracking-wide" dir="ltr">010 9530 0546</span>
+                        <span class="text-xs font-bold text-logoGold tracking-wider" dir="ltr">010 9530 0546</span>
                     </a>
                 </div>
             </div>
-
         </div>
-
     </div>
 
+    <!-- جافا سكريبت التفاعلي مع قواعد البيانات وحماية تسجيل الدخول -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, doc, getDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // إعدادات الـ Firebase الخاصة بمتصفحك دون تغيير
+        // إعدادات اتصال Firebase المتكاملة والآمنة
         const firebaseConfig = {
             apiKey: "AIzaSyBB49YLeVKt0X8IKeeqXBBigpRpr1fkfUk",
             authDomain: "al-arabia-bi-basata.firebaseapp.com",
@@ -181,90 +204,154 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // جعل اللوجو يتحرك ويلحق الماوس بشكل ثلاثي الأبعاد متناسق
+        // الحركة ثلاثية الأبعاد الفاخرة للوجو عند تحريك مؤشر الماوس
         const logoWrapper = document.getElementById('interactiveLogoWrapper');
-        document.addEventListener('mousemove', (e) => {
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            const mouseX = e.clientX - (w / 2);
-            const mouseY = e.clientY - (h / 2);
-            const rotateX = -(mouseY / h) * 30;
-            const rotateY = (mouseX / w) * 30;
-            logoWrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-        });
-        document.addEventListener('mouseleave', () => {
-            logoWrapper.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-        });
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const w = window.innerWidth;
+                const h = window.innerHeight;
+                const mouseX = e.clientX - (w / 2);
+                const mouseY = e.clientY - (h / 2);
+                const rotateX = -(mouseY / h) * 25;
+                const rotateY = (mouseX / w) * 25;
+                logoWrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
+                logoWrapper.style.boxShadow = `0 15px 30px rgba(212, 175, 55, 0.25)`;
+            });
+            document.addEventListener('mouseleave', () => {
+                logoWrapper.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+                logoWrapper.style.boxShadow = `0 4px 6px -1px rgba(0, 0, 0, 0.1)`;
+            });
+        }
 
-        // مزامنة صورة اللوجو لحظياً مع السيرفر السحابي في حال تحديثه
+        // جلب اللوجو الرئيسي من السيرفر بشكل ديناميكي إن وجد
         onSnapshot(doc(db, "settings", "logo"), (docSnap) => {
             if (docSnap.exists() && docSnap.data().base64) {
                 const logoImgs = document.querySelectorAll('img[alt="لوجو العربية ببساطة"]');
-                logoImgs.forEach(img => {
-                    img.src = docSnap.data().base64;
-                });
+                logoImgs.forEach(img => { img.src = docSnap.data().base64; });
             }
         });
 
+        // تشغيل زر الإدخال السريع (Enter Key) لتسجيل الدخول السلس
+        const loginInputs = [document.getElementById('loginPhone'), document.getElementById('loginPass')];
+        loginInputs.forEach(input => {
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    window.handleLogin();
+                }
+            });
+        });
+
+        // دالة تبديل إظهار وإخفاء كلمة المرور
+        window.togglePasswordVisibility = () => {
+            const passInput = document.getElementById('loginPass');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        };
+
+        // دالة معالجة وفحص بيانات تسجيل الدخول الآمنة
         window.handleLogin = async () => {
             const phone = document.getElementById('loginPhone').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
             const errMsg = document.getElementById('errorMessage');
             const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const btnIcon = document.getElementById('btnIcon');
 
-            errMsg.innerText = "جاري التحقق من البيانات..."; 
-            errMsg.className = "text-amber-400 text-xs font-bold transition-all duration-200 min-h-[1.25rem]";
-
+            // إظهار حالة الانتظار
+            errMsg.innerText = "جاري التحقق والاتصال ببوابة الأبطال..."; 
+            errMsg.className = "text-amber-400 text-xs font-bold text-center mt-4 animate-pulse";
+            
             if (!phone || !pass) {
-                errMsg.innerText = "⚠️ برجاء إدخل رقم الهاتف وكلمة المرور أولاً.";
-                errMsg.className = "text-red-400 text-xs font-bold";
+                errMsg.innerText = "⚠️ برجاء إدخال رقم الهاتف وكلمة المرور أولاً.";
+                errMsg.className = "text-red-400 text-xs font-bold text-center mt-4";
                 return;
             }
 
+            // تعطيل الزر مؤقتاً لمنع النقر المتعدد
             loginBtn.disabled = true;
+            btnText.innerText = "جاري الدخول...";
+            btnSpinner.classList.remove('hidden');
+            btnIcon.classList.add('hidden');
 
-            // التحقق من حساب المعلم أو المسؤول
-            if (
-                (phone === "01095300546" && pass === "khalid26") || 
-                (phone === "admin" && pass === "1234")
-            ) {
+            // 👑 حساب المعلم المطور (الأستاذ خالد وحيد)
+            if ((phone === "01095300546" && pass === "khalid26") || (phone === "admin" && pass === "1234")) {
                 localStorage.setItem('loggedInUser', JSON.stringify({ name: "الأستاذ خالد وحيد", role: "admin" }));
-                window.location.href = 'teacher.html';
+                window.location.href = 'teacher.html?access=khaled_secure_token';
                 return;
             }
 
             try {
-                // البحث عن الطالب في السيرفر السحابي
-                const studentDoc = await getDoc(doc(db, "students", phone));
+                // الفحص الذكي ثنائي الأبعاد (قاعدة مستخدمين موحدة مع دعم الحسابات السابقة)
+                let userDoc = await getDoc(doc(db, "users", phone));
+                let targetCollection = "users";
 
-                if (!studentDoc.exists()) {
-                    errMsg.innerText = "❌ عذراً، هذا الحساب غير مسجل بالمنصة.";
-                    errMsg.className = "text-red-400 text-xs font-bold";
+                // إذا لم يتم العثور عليه في جدول المستخدمين، افحص في جدول الطلاب كاحتياط أمني
+                if (!userDoc.exists()) {
+                    userDoc = await getDoc(doc(db, "students", phone));
+                    targetCollection = "students";
+                }
+
+                if (!userDoc.exists()) {
+                    errMsg.innerText = "❌ عذراً، هذا الحساب غير مسجل حالياً بالمنصة.";
+                    errMsg.className = "text-rose-400 text-xs font-bold text-center mt-4";
+                    resetLoginButton();
                     return;
                 }
 
-                const studentData = studentDoc.data();
+                const userData = userDoc.data();
 
-                if (studentData.password !== pass) {
-                    errMsg.innerText = "❌ كلمة المرور غير صحيحة، حاول مجدداً.";
-                    errMsg.className = "text-red-400 text-xs font-bold";
+                // التحقق من صحة كلمة المرور المدخلة
+                if (userData.password !== pass) {
+                    errMsg.innerText = "❌ كلمة المرور غير صحيحة، تأكد منها وحاول مجدداً.";
+                    errMsg.className = "text-rose-400 text-xs font-bold text-center mt-4";
+                    resetLoginButton();
                     return;
                 }
 
-                // تحديث حالة الطالب إلى متصل
-                await updateDoc(doc(db, "students", phone), {
+                // تحديث حالة الأونلاين للجهتين لضمان التوافق مع كافة التحديثات في لوحة المعلم
+                await updateDoc(doc(db, targetCollection, phone), {
+                    online: true,
                     isOnline: true
                 });
 
-                localStorage.setItem('loggedInUser', JSON.stringify({ name: studentData.name, role: "student", phone: phone }));
-                window.location.href = 'student.html'; 
+                // تخزين بيانات الجلسة محلياً بشكل آمن لصفحة البطل
+                localStorage.setItem('loggedInUser', JSON.stringify({ 
+                    name: userData.name, 
+                    role: userData.role || "student", 
+                    phone: phone,
+                    grade: userData.grade || ""
+                }));
+
+                // توجيه فوري لصفحة البطل بنجاح
+                errMsg.innerText = "✨ تم التحقق بنجاح! جاري تحضير لوحتك الخاصة يا بطل...";
+                errMsg.className = "text-emerald-400 text-xs font-bold text-center mt-4";
+                
+                setTimeout(() => {
+                    window.location.href = 'student.html'; 
+                }, 800);
 
             } catch (error) {
-                console.error("Login error: ", error);
+                console.error("Login error details: ", error);
                 errMsg.innerText = `⚠️ خطأ في الاتصال بالسيرفر: ${error.message}`;
-                errMsg.className = "text-red-400 text-xs font-bold";
-            } finally {
+                errMsg.className = "text-red-400 text-xs font-bold text-center mt-4";
+                resetLoginButton();
+            }
+            
+            function resetLoginButton() {
                 loginBtn.disabled = false;
+                btnText.innerText = "دخول المنصة الآن";
+                btnSpinner.classList.add('hidden');
+                btnIcon.classList.remove('hidden');
             }
         };
     </script>
