@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: #0b162c;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #d4af37;
+  color: #0b162c;
+}
+
+/* RTL-friendly custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0b162c;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f3158;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a4684;
+}
+
+/* Gold focus glow for inputs */
+.gold-input {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.gold-input:focus {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+  border-color: #d4af37;
+  background-color: #112244;
+}
+
+/* Glowing primary button */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 30%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(30deg);
+  transition: none;
+}
+.btn-glow:hover::after {
+  left: 120%;
+  transition: all 0.8s ease-in-out;
+}
+
+/* Reusable form input for modals */
+.form-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid rgb(51 65 85 / 0.8);
+  background-color: rgb(11 22 44 / 0.8);
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  color: white;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.form-input:focus {
+  border-color: #d4af37;
+  background-color: #112244;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
